@@ -2,14 +2,16 @@
     <div>
       <el-row style="height: 840px;">
         <search-bar @onSearch="searchResult" ref="searchBar"></search-bar>
+      <!--这里想做传递数据的工作-->
+<!--        <Order v-show="false" v-bind:getHouse="fromHouse"></Order>-->
         <el-tooltip effect="dark" placement="right"
                     v-for="item in houses.slice((currentPage-1)*pageSize,currentPage*pageSize)" :key="item.houseNumber">
-          <!-- house没有id,只有houseNumber       v-for="item in houses" :key="item.id">-->
           <p slot="content" style="font-size: 14px;margin-bottom: 6px;">{{item.addNote}}</p>
           <p slot="content" style="font-size: 13px;margin-bottom: 6px">
             <span>房屋状态{{item.houseStatus}}</span>
             <span>房屋类型{{item.houseType}}</span>
             <span>房屋面积{{item.houseArea}}</span>
+            <span>房主编号{{item.ownerNumber}}</span>//试添加
           </p>
           <p slot="content" style="width: 300px" class="abstract">{{item.addNote}}</p>
           <el-card style="width: 135px;margin-bottom: 20px;height: 233px;float: left;margin-right: 15px" class="house"
@@ -38,7 +40,6 @@
     </div>
  </template>
 
-
 <script>
   import SearchBar from "../house/SearchBar";
   import ShowForm from "./ShowForm";
@@ -49,7 +50,7 @@
         return {
           houses:[],
           currentPage:1,
-          pageSize:17
+          pageSize:17,
         }
       },
       mounted:function () {
@@ -90,6 +91,7 @@
             lastupdateTime: item.lastupdateTime,
             soldPrice:item.soldPrice,
             addNote:item.addNote,
+            ownerNumber:item.ownerNumber,
           }
         }
       }

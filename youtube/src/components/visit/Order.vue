@@ -5,10 +5,14 @@
       title="订单详情"
       :visible.sync="dialogFormVisible"
       @close="clear">
+
+
       <el-form v-model="form" style="text-align: left" ref="dataForm">
-        <el-form-item label="账单编号" :label-width="formLabelWidth" prop="dealNumber">
-          <el-input v-model="form.dealNumber" autocomplete="off" placeholder="这里填订单编号"></el-input>
-        </el-form-item>
+<!--        <el-form-item label="账单编号" :label-width="formLabelWidth" prop="dealNumber">-->
+<!--          <el-input v-model="form.dealNumber" autocomplete="off" placeholder="这里填订单编号"></el-input>-->
+<!--        </el-form-item>-->
+
+
         <el-form-item label="房屋编号" :label-width="formLabelWidth" prop="houseNumber">
           <el-input v-model="form.houseNumber" autocomplete="off" placeholder="这里是房屋编号”
 "></el-input>
@@ -65,19 +69,27 @@
 
 <script>
     export default {
-        name: "Order",
+      name: "Order",
+
       data(){
+        console.log("Order得到的值"+this.$route.query.houseNumber)
+        let skthouseNumber=this.$route.query.houseNumber
+        let skthousePrice=this.$route.query.soldPrice
+        let sktownerNumber=this.$route.query.ownerNumber
+        console.log("房主编号"+sktownerNumber)
         return {
           dialogFormVisible: true,
           form: {
-            dealNumber:'',
-            houseNumber: '',
-            ownerNumber:'',
+            // houseNumber: '',
+            // houseNumber:skthouseNumber,
+            houseNumber:this.$route.query.houseNumber,
+            ownerNumber:sktownerNumber,
             tenantNumber:'',
             beginTime:'',
             claim:'',
             endTime:'',
-            price:'',
+            // price:skthousePrice,
+            price:this.$route.query.soldPrice,
             staffNumber:'',
             handleTime:'',
           },
@@ -87,8 +99,8 @@
       methods:{
         clear () {
           this.form = {
-            dealNumber:'',
-            houseNumber: '',
+            // dealNumber:'',
+            houseNumber:'',
             ownerNumber:'',
             tenantNumber:'',
             beginTime:'',
@@ -99,10 +111,11 @@
             handleTime:'',
           }
         },
+
         onAdd(){
           this.$axios
           .post('/dealadd',{
-            dealNumber:this.form.dealNumber,
+            // dealNumber:this.form.dealNumber,不需显示
             houseNumber: this.form.houseNumber,
             ownerNumber:this.form.ownerNumber,
             tenantNumber:this.form.tenantNumber,

@@ -5,6 +5,7 @@
       title="房屋详情"
       :visible.sync="dialogFormVisible"
       @close="clear">
+
       <el-form v-model="form" style="text-align: left" ref="dataForm">
         <el-form-item label="房屋面积" :label-width="formLabelWidth" prop="houseArea">
           <el-input v-model="form.houseArea" autocomplete="off" placeholder="这里填房屋面积"></el-input>
@@ -20,7 +21,6 @@
 <!--          <el-input v-model="form.lastupdateTime" autocomplete="off"></el-input>-->
 <!--        </el-form-item>-->
 
-
         <el-form-item label="房屋地点" :label-width="formLabelWidth" prop="houseAddr">
           <el-input v-model="form.houseAddr" autocomplete="off"></el-input>
         </el-form-item>
@@ -31,6 +31,7 @@
         <el-form-item label="房主要求" :label-width="formLabelWidth" prop="addNote">
           <el-input type="textarea" v-model="form.addNote" autocomplete="off"></el-input>
         </el-form-item>
+
         <el-form-item label="房屋类型" :label-width="formLabelWidth" prop="houseType">
           <el-select v-model="form.houseType" placeholder="请选择分类">
             <el-option label="别墅" value="1"></el-option>
@@ -41,6 +42,10 @@
         </el-form-item>
         <el-form-item prop="houseNumber" style="height: 0">
           <el-input type="hidden" v-model="form.houseNumber" autocomplete="off"></el-input>
+        </el-form-item>
+
+        <el-form-item prop="ownerNumber" style="height: 0">
+          <el-input type="hidden" v-model="form.ownerNumber" autocomplete="off"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -67,6 +72,7 @@
             lastupdateTime: '',
             soldPrice:'',
             addNote:'',
+            ownerNumber:'',//注释掉ownerNumber
           },
           formLabelWidth: '120px'
         }
@@ -83,11 +89,23 @@
             lastupdateTime: '',
             soldPrice:'',
             addNote:'',
+            ownerNumber:'',//注释掉ownerNumber
           }
         },
         gotolink () {
-        this.$router.replace('/order')
-        }
+          // this.$emit('getHouse',this.form.houseNumber)
+          console.log('ShowForm里边的ownerNumber '+this.form.ownerNumber)
+          console.log('ShowForm里边的房屋编号: '+this.form.houseNumber)
+          this.$router.push({
+            name:'order',
+            query:{
+              houseNumber:this.form.houseNumber,
+              soldPrice:this.form.soldPrice,
+              ownerNumber:this.form.ownerNumber
+            }
+          })
+          // this.$router.replace('/order')
+        },
       }
     }
 </script>
