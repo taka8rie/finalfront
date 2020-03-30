@@ -2,6 +2,8 @@
     <div>
       <el-row style="height: 840px;">
         <search-bar @onSearch="searchResult" ref="searchBar"></search-bar>
+<!--  vSideMenu-->
+      <v-side-menu @visitSelect="selectResult" ref="vSideMenu"></v-side-menu>
       <!--这里想做传递数据的工作-->
 <!--        <Order v-show="false" v-bind:getHouse="fromHouse"></Order>-->
         <el-tooltip effect="dark" placement="right"
@@ -11,7 +13,7 @@
             <span>房屋状态{{item.houseStatus}}</span>
             <span>房屋类型{{item.houseType}}</span>
             <span>房屋面积{{item.houseArea}}</span>
-            <span>房主编号{{item.ownerNumber}}</span>//试添加
+            <span>房主编号{{item.ownerNumber}}</span>
           </p>
           <p slot="content" style="width: 300px" class="abstract">{{item.addNote}}</p>
           <el-card style="width: 135px;margin-bottom: 20px;height: 233px;float: left;margin-right: 15px" class="house"
@@ -28,6 +30,9 @@
           </el-card>
         </el-tooltip>
         <show-form @onSumbit="loadHouses()" ref="edit"></show-form>
+
+
+
       </el-row>
       <el-row>
         <el-pagination
@@ -43,9 +48,11 @@
 <script>
   import SearchBar from "../house/SearchBar";
   import ShowForm from "./ShowForm";
+  import vSideMenu from "./vSideMenu";
+
     export default {
         name: "visitHouse",
-      components:{SearchBar,ShowForm},
+      components:{SearchBar,ShowForm,vSideMenu},
       data(){
         return {
           houses:[],
@@ -79,6 +86,18 @@
             }
           })
         },
+        //租客页面分类显示
+        selectResult() {
+          var _this=this
+          var value=this.$refs.vSideMenu.value //这里想取sidemenu组件里边的type的数值,返回数字
+          var url = 'type/' + value + '/deals'
+          this.$axios.get(url).then(resp => {
+            if (resp && resp.status === 200) {
+              _this.houses = resp.data
+            }
+          })
+        }
+      ,
         editHouse(item) {
           this.$refs.edit.dialogFormVisible = true
           this.$refs.edit.form = {
@@ -93,7 +112,7 @@
             addNote:item.addNote,
             ownerNumber:item.ownerNumber,
           }
-        }
+        },
       }
     }
 </script>
