@@ -7,7 +7,7 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import toastMessage from "./components/alert/ToastMessage";
 import visitHouse from "./components/visit/visitHouse";
-import  Vuex from 'vuex'
+
 import store from './store'
 
 // import store from './store'
@@ -28,16 +28,20 @@ Vue.use(ElementUI)
 
 //使用钩子函数判断是否拦截,在访问每一个路由前调用
 router.beforeEach((to,from,next)=>{
-  // if (store.state.user.username && to.path.startsWith('/login')) {
-  //   initAdminMenu(router,store)
-  // }
-  // 已登录状态下访问 login 页面直接跳转到后台首页  ---->这里需要修改/login和dashboard, 尝试修改startwith
-  //从'/login'修改为‘/’表示已经登录
-  // if (store.state.user.username && to.path.startsWith('/center')) {
-  //   next({
-  //     path: '/admin'//尝试在这里修改了路径
-  //   })
-  // }
+  //在用户已登录且访问以 /admin 开头的路径时请求菜单信息
+  if (store.state.user && to.path.startsWith('/admin')) {
+    console.log("进入访问admin")
+    initAdminMenu(router,store)
+    console.log("已退出initAdminMenu")
+  }
+  // 已登录状态下访问 center 页面直接跳转到后台首页  ---->这里需要修改/login和dashboard, 尝试修改startwith
+  if (store.state.user && to.path.startsWith('/center')) {
+    console.log("进入了跳转函数")
+    next({
+      path: 'admin'//！！这里的dashboard未实现
+    })
+    console.log("跳转函数执行结束")
+  }
   // if (to.meta.requireAuth) {
   //   if (store.state.user.username) {
   //     axios.get('/authentication').then(resp=>{
@@ -53,8 +57,6 @@ router.beforeEach((to,from,next)=>{
   // }else {
   //   next()
   // }
-
-
 
 
   //首先判断访问的路径是否需要被拦截进行登录
@@ -79,29 +81,40 @@ router.beforeEach((to,from,next)=>{
   }
 })
 
+//执行请求，调用格式化方法并向路由表中添加信息
 const initAdminMenu = (router, store) => {
   // 防止重复触发加载菜单操作
-  if (store.state.adminMenus.length > 0) {
-    return
-  }
+  // if (store.state.adminMenus) {//!!外边一层if是尝试添加
+  console.log("initAdminMenu里的length: " + store.state.adminMenus.length);
+    if (store.state.adminMenus.length > 0) {
+      return;
+    }
+
+  // }
   axios.get('/menu').then(resp => {
+
     if (resp && resp.status === 200) {
-      var fmtRoutes = formatRoutes(resp.data.result)
+      console.log("状态码是200")
+      var fmtRoutes = formatRoutes(resp.data.result)//
+      console.log("fmtRoutes的值是: "+fmtRoutes)
       router.addRoutes(fmtRoutes)
+      console.log("initAdminMenu接收到的路由: " + fmtRoutes);
       store.commit('initAdminMenu', fmtRoutes)
     }
   })
 }
 
 
-
+//传入的参数 routes 代表我们从后端获取的菜单列表
 const formatRoutes = (routes) => {
   let fmtRoutes = []
+  //先判断一条菜单项是否含子项,如果含则进行递归处理
   routes.forEach(route => {
     if (route.children) {
       route.children = formatRoutes(route.children)
     }
 
+    //把路由的属性与菜单项的属性对应起来
     let fmtRoute = {
       path: route.path,
       component: resolve => {

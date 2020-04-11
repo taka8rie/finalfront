@@ -33,7 +33,9 @@
       },
       computed:{
         adminMenus() {
+          console.log("AdminMenu里边接收到的menus: "+this.$store.state.adminMenus)
             return this.$store.state.adminMenus
+
         },
         currentPath() {
             return this.$route.path

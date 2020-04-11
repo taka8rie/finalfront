@@ -12,6 +12,8 @@ import ShowHouse from "../components/zufang/ShowHouse";
 import AdminIndex from "../components/admin/AdminIndex";
 import AdminMenu from "../components/admin/AdminMenu";
 import Header from "../components/admin/Header";
+import center from "../components/common/center";
+import DashBoard from "../components/admin/dashboard/index"
 
 Vue.use(Router)
 
@@ -51,7 +53,11 @@ export default new Router({
         path: '/showform',
         component:ShowForm,
         meta:{requireAuth: true}
-      },
+      },{
+        path: '/center',
+        name: 'center',
+        component:center,
+      }
       ]
     },
     // 4/10新增
@@ -60,7 +66,14 @@ export default new Router({
       component:AdminIndex,
       meta:{
       requireAuth:true
-      }
+      },
+      children:[
+        {
+          path:'/admin/dashboard',
+          name:'Dashboard',
+          component:DashBoard
+        }
+      ]
     }
   ]
 })
@@ -103,7 +116,10 @@ export const createRouter = routes => new Router({
           path: '/showform',
           component:ShowForm,
           meta:{requireAuth: true}
-        },//已修改为自身
+        },{
+          path: '/center',
+          component:center,
+        }
       ]
     },
     {
