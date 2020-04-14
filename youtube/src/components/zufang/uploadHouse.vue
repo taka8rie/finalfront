@@ -1,20 +1,15 @@
 <template>
   <div>
     <el-row style="height: 840px;">
-<!--  添加查找未审核的房屋按钮-->
-      <el-button type="success" @click="notCheck">查看未审核房屋</el-button>
-
       <!--<search-bar></search-bar>-->
-     <search-bar @onSearch="searchResult" ref="searchBar"></search-bar>
       <el-tooltip effect="dark" placement="right"
                   v-for="item in houses.slice((currentPage-1)*pageSize,currentPage*pageSize)" :key="item.houseNumber">
-<!-- house没有id,只有houseNumber     v-for="item in houses" :key="item.id">-->
+        <!-- house没有id,只有houseNumber       v-for="item in houses" :key="item.id">-->
         <p slot="content" style="font-size: 14px;margin-bottom: 6px;">{{item.addNote}}</p>
         <p slot="content" style="font-size: 13px;margin-bottom: 6px">
           <span>房屋状态{{item.houseStatus}}</span>
           <span>房屋类型{{item.houseType}}</span>
           <span>房屋面积{{item.houseArea}}</span>
-          <span>房主登录账号{{item.ownerNumber}}</span>
         </p>
         <p slot="content" style="width: 300px" class="abstract">{{item.addNote}}</p>
         <el-card style="width: 135px;margin-bottom: 20px;height: 233px;float: left;margin-right: 15px" class="house"
@@ -24,14 +19,14 @@
           </div>
           <div class="info">
             <div class="houseAddr">
-              <a href="">地址:{{item.houseAddr}}</a>
+              <a href="">房屋地址:{{item.houseAddr}}</a>
             </div>
             <i class="el-icon-delete" @click="deleteHouse(item.houseNumber)"></i>
           </div>
-          <div class="lastupdate">更新时间:{{item.lastupdateTime}}</div>
+          <div class="lastupdate">最近更新:{{item.lastupdateTime}}</div>
         </el-card>
       </el-tooltip>
-      <edit-form @onSumbit="loadHouses()" ref="edit"></edit-form>
+      <show-house @onSumbit="loadHouses()" ref="edit"></show-house>
     </el-row>
     <el-row>
       <el-pagination
@@ -45,17 +40,16 @@
 </template>
 
 <script>
-    import SearchBar from "./SearchBar";
-    import EditForm from "./EditForm";
+  import ShowHouse from "./ShowHouse";
     export default {
-        name: "Houses",
-      components: {SearchBar,EditForm},
+        name: "uploadHouse",
+      components:{ShowHouse},
       data(){
-          return {
-            houses:[],
-            currentPage:1,
-            pageSize:17
-          }
+        return {
+          houses:[],
+          currentPage:1,
+          pageSize:17
+        }
       },
       mounted:function () {
         this.loadHouses()
@@ -65,25 +59,24 @@
           var _this = this
           this.$axios.get('/houses').then(resp => {
             if (resp && resp.status === 200) {
-              console.log("载入房子get /houses ")
               _this.houses = resp.data
             }
           })
         },
         handleCurrentChange: function (currentPage) {
           this.currentPage = currentPage
-          console.log('Houses.vue里边的currentPage: '+this.currentPage)
+          console.log(this.currentPage)
         },
-        searchResult () {
-          var _this = this
-          this.$axios
-            .get('/search?keywords=' + this.$refs.searchBar.keywords, {
-            }).then(resp => {
-            if (resp && resp.status === 200) {
-              _this.houses = resp.data
-            }
-          })
-        },
+        // searchResult () {
+        //   var _this = this
+        //   this.$axios
+        //     .get('/search?keywords=' + this.$refs.searchBar.keywords, {
+        //     }).then(resp => {
+        //     if (resp && resp.status === 200) {
+        //       _this.houses = resp.data
+        //     }
+        //   })
+        // },
         deleteHouse(houseNumber) {
           this.$confirm('此操作将永久删除该房屋, 是否继续?', '提示', {
             confirmButtonText: '确定',
@@ -107,32 +100,16 @@
         editHouse(item) {
           this.$refs.edit.dialogFormVisible = true
           this.$refs.edit.form = {
-            ownerNumber:item.ownerNumber,//新增房屋对应的房主账号
             houseNumber: item.houseNumber,
             houseAddr: item.houseAddr,
-
-            // houseType:'测试的别墅',
-             houseType: item.houseType,
-
+            houseType: item.houseType,
             houseArea: item.houseArea,
             houseStatus: item.houseStatus,
             houseCover: item.houseCover,
             lastupdateTime: item.lastupdateTime,
             soldPrice:item.soldPrice,
             addNote:item.addNote,
-            adminCheck:item.adminCheck,//是否对房屋进行审查
           }
-        },
-        notCheck() {
-          // this.$router.push('/checkHouse')
-          var _this=this
-          var value=0 //0:未审核 1:已审核
-          var url = 'type/' + value + '/check'
-          this.$axios.get(url).then(resp => {
-            if (resp && resp.status === 200) {
-              _this.houses = resp.data
-            }
-          })
         }
       }
     }
@@ -140,9 +117,9 @@
 
 <style scoped>
   .cover{
-    width: 120px;
+    width: 115px;
     height: 172px;
-    margin-bottom: 10px;
+    margin-bottom: 7px;
     overflow: hidden;
     cursor: pointer;
   }
@@ -150,11 +127,10 @@
   img {
     width: 115px;
     height: 172px;
-    /*margin: 0 auto;*/
   }
 
   .houseAddr {
-    font-size: 11px;
+    font-size: 14px;
     text-align: left;
   }
 
@@ -190,4 +166,4 @@
   a:link, a:visited, a:focus {
     color: #3377aa;
   }
- </style>
+</style>

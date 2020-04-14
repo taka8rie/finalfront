@@ -31,8 +31,6 @@
         </el-tooltip>
         <show-form @onSumbit="loadHouses()" ref="edit"></show-form>
 
-
-
       </el-row>
       <el-row>
         <el-pagination

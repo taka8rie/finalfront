@@ -55,7 +55,7 @@
         </el-form-item>
 
         <el-form-item label="看房后评价" :label-width="formLabelWidth" prop="addNote">
-          <el-input type="textarea" v-model="form.addNote" autocomplete="off"></el-input>
+          <el-input type="textarea" v-model="form.claim" autocomplete="off"></el-input>
         </el-form-item>
 
       </el-form>
@@ -70,25 +70,16 @@
 <script>
     export default {
       name: "Order",
-
       data(){
-        console.log("Order得到的值"+this.$route.query.houseNumber)
-        let skthouseNumber=this.$route.query.houseNumber
-        let skthousePrice=this.$route.query.soldPrice
-        let sktownerNumber=this.$route.query.ownerNumber
-        console.log("房主编号"+sktownerNumber)
         return {
           dialogFormVisible: true,
           form: {
-            // houseNumber: '',
-            // houseNumber:skthouseNumber,
             houseNumber:this.$route.query.houseNumber,
-            ownerNumber:sktownerNumber,
-            tenantNumber:'',
+            ownerNumber:this.$route.query.ownerNumber,
+            tenantNumber:this.$route.query.tenantNumber,
             beginTime:'',
             claim:'',
             endTime:'',
-            // price:skthousePrice,
             price:this.$route.query.soldPrice,
             staffNumber:'',
             handleTime:'',
@@ -99,7 +90,6 @@
       methods:{
         clear () {
           this.form = {
-            // dealNumber:'',
             houseNumber:'',
             ownerNumber:'',
             tenantNumber:'',
@@ -111,11 +101,9 @@
             handleTime:'',
           }
         },
-
         onAdd(){
           this.$axios
           .post('/dealadd',{
-            // dealNumber:this.form.dealNumber,不需显示
             houseNumber: this.form.houseNumber,
             ownerNumber:this.form.ownerNumber,
             tenantNumber:this.form.tenantNumber,

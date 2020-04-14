@@ -1,4 +1,5 @@
 <template>
+  <!--这里的:limit由1改成了3-->
   <el-upload
     class="img-upload"
     ref="upload"
@@ -8,7 +9,7 @@
     :before-remove="beforeRemove"
     :on-success="handleSuccess"
     multiple
-    :limit="1"
+    :limit="3"
     :on-exceed="handleExceed"
     :file-list="fileList">
     <el-button size="small" type="primary">点击上传</el-button>

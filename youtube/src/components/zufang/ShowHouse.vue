@@ -21,7 +21,7 @@
           <el-input v-model="form.ownerNumber" autocomplete="off"></el-input>
         </el-form-item>
 
-          <div class="block">
+        <div class="block">
           <span class="demonstration">提交日期</span>
           <el-date-picker
             v-model="form.lastupdateTime"
@@ -29,7 +29,7 @@
             placeholder="选择日期">
           </el-date-picker>
         </div>
-<!--        </el-form-item>-->
+        <!--        </el-form-item>-->
         <el-form-item label="房屋地点" :label-width="formLabelWidth" prop="houseAddr">
           <el-input v-model="form.houseAddr" autocomplete="off"></el-input>
         </el-form-item>
@@ -43,10 +43,10 @@
 
         <el-form-item label="房屋类型" :label-width="formLabelWidth" prop="houseType">
           <el-select v-model="form.houseType" placeholder="请选择分类"  @change="haolong">
-<!--            <el-option label="别墅" value="1"></el-option>-->
-<!--            <el-option label="普通" value="2"></el-option>-->
-<!--            <el-option label="3DK" value="3"></el-option>-->
-<!--            <el-option label="其他" value="4"></el-option>-->
+            <!--            <el-option label="别墅" value="1"></el-option>-->
+            <!--            <el-option label="普通" value="2"></el-option>-->
+            <!--            <el-option label="3DK" value="3"></el-option>-->
+            <!--            <el-option label="其他" value="4"></el-option>-->
 
             <el-option
               v-for="item in options"
@@ -56,10 +56,7 @@
             </el-option>
           </el-select>
         </el-form-item>
-<!--添加审核选项-->
-        <el-form-item label="是否审核">
-          <el-switch v-model="form.adminCheck" :active-value="1" :inactive-value="0"></el-switch>
-        </el-form-item>
+        <!--未添加审核选项-->
 
         <el-form-item prop="houseNumber" style="height: 0">
           <el-input type="hidden" v-model="form.houseNumber" autocomplete="off"></el-input>
@@ -74,10 +71,10 @@
 </template>
 
 <script>
-    import ImgUpload from "./ImgUpload";
+  import ImgUpload from "../house/ImgUpload";
     export default {
-        name: "EditForm",
-      components: {ImgUpload},
+        name: "ShowHouse",
+      components:{ImgUpload},
       data () {
         return {
           //尝试替换为el-select
@@ -111,7 +108,7 @@
             addNote:'',
             adminCheck:false,//房屋默认未审核
           },
-          formLabelWidth: '120px'
+          formLabelWidth: '150px'
         }
       },
       methods: {
@@ -136,7 +133,7 @@
             lastupdateTime: '',
             soldPrice:'',
             addNote:'',
-            adminCheck:false,
+            adminCheck:0,//将false替换为0
           }
         },
         onSubmit () {
@@ -154,7 +151,7 @@
               soldPrice:this.form.soldPrice,
               addNote:this.form.addNote,
               // adminCheck:this.form.adminCheck,//是否对房屋进行审查
-              adminCheck:this.form.adminCheck
+              adminCheck:0,//将false替换为0
 
             }).then(resp => {
             if (resp && resp.status === 200) {
@@ -169,6 +166,7 @@
           console.log(this.form.houseCover);
         }
       }
+
     }
 </script>
 

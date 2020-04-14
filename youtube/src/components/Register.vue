@@ -27,17 +27,6 @@
           if (!value) {
             return callback(new Error('账号不能为空'));
           }
-          // setTimeout(() => {
-          //   if (!Number.isInteger(value)) {
-          //     callback(new Error('请输入数字值'));
-          //   } else {
-          //     if (value < 18) {
-          //       callback(new Error('必须年满18岁'));
-          //     } else {
-          //       callback();
-          //     }
-          //   }
-          // }, 1000);
         };
         var validatePass = (rule, value, callback) => {
           if (value === '') {
@@ -80,17 +69,24 @@
       },
       methods: {
         submitForm() {
+          console.log("username: "+this.ruleForm.account)
+          console.log("password: "+this.ruleForm.pass)
+          console.log("注册的类型为: "+this.radio.valueOf())
           this.$axios.post('/register',{
             username:this.ruleForm.account,
             password:this.ruleForm.pass,
-            accountType: this.radio.valueOf()
+            accountType: this.radio.valueOf()//获取radio的值
           }) .then(successResponse => {
             if (successResponse.data.code === 200) {
-              this.$router.replace({path: '/login'})
+            this.$alert('注册成功','提示',{confirmButtonText: '确定'})
+               this.$router.replace({path: '/'})
+            } else {
+              this.$alert(successResponse.data.message,'提示',{
+                confirmButtonText: '确定'
+              }).catch();
             }
-          })
-            .catch(failResponse => {
-            })
+          }).catch(failResponse=>{})
+
         },
         resetForm(formName) {
           this.$refs[formName].resetFields();

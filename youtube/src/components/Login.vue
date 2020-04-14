@@ -24,10 +24,11 @@
           </el-form-item>
         </el-form>
       <el-form-item>
-        <el-button type="primary" @click="login">登录</el-button>
+        <el-button type="primary" @click="gotoregister">注册</el-button>
       </el-form-item>
    </el-form>
     </body>
+
 </template>
 
 <script>
@@ -37,11 +38,13 @@
     data () {
       return {
         loginForm: {
-          username: '',
-          password: ''
+          username: '',//loginForm里边的用户名
+         password: ''
         },
         radio:3,
-        responseResult: []
+        responseResult: [],
+        toastShow: false,
+        toastText: '',
       }
     },
     methods: {
@@ -50,15 +53,26 @@
           .post('/login', {
             username: this.loginForm.username,
             password: this.loginForm.password,
-            accountType:this.radio.valueOf()  //试图传label的值过去
+            accountType:this.radio.valueOf(), //传label的值过去
+            withCredentials:true,//获取session
           })
           .then(successResponse => {
             if (successResponse.data.code === 200) {
               this.$router.replace({path: '/index'})
+              //获取session
+              // sessionStorage.setItem('name',JSON.stringify(successResponse.data.username));
+              // let myName=JSON.parse(sessionStorage.getItem("name"));
+              // console.log("session is : "+myName)
+            }else{
+            //这里需要填充
+              this.$toastMessage({message:'用户名和密码错误',time:3000})
             }
           })
           .catch(failResponse => {
           })
+      },
+      gotoregister(){
+        this.$router.replace('/register')
       }
     }
   }
@@ -81,6 +95,9 @@
     text-align: center;
     color: #505458;
   }
+
+
+
   #poster {
     height: 100%;
     width: 100%;

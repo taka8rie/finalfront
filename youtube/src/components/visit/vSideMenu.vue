@@ -39,7 +39,14 @@
       },
       methods:{
         typeSelect(key) {
-         // console.log('这是vSideMenu里边的typeSelect方法')
+          //这里为试读取label值(可用)
+          let object = {};
+        object=this.options.find((item)=>{
+          return item.value===key;
+        })
+          console.log('vSideMenu里边key值: '+object.value)
+          console.log('vSideMenu里边key对应的label值: '+object.label)
+    //以下为正常代码
          this.value=key
           this.$emit('visitSelect')
         }

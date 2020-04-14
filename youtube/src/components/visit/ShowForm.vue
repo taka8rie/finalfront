@@ -5,7 +5,6 @@
       title="房屋详情"
       :visible.sync="dialogFormVisible"
       @close="clear">
-
       <el-form v-model="form" style="text-align: left" ref="dataForm">
         <el-form-item label="房屋面积" :label-width="formLabelWidth" prop="houseArea">
           <el-input v-model="form.houseArea" autocomplete="off" placeholder="这里填房屋面积"></el-input>
@@ -34,10 +33,10 @@
 
         <el-form-item label="房屋类型" :label-width="formLabelWidth" prop="houseType">
           <el-select v-model="form.houseType" placeholder="请选择分类">
-            <el-option label="别墅" value="1"></el-option>
-            <el-option label="普通" value="2"></el-option>
-            <el-option label="3DK" value="3"></el-option>
-            <el-option label="其他" value="4"></el-option>
+<!--            <el-option label="别墅" value="1"></el-option>-->
+<!--            <el-option label="普通" value="2"></el-option>-->
+<!--            <el-option label="3DK" value="3"></el-option>-->
+<!--            <el-option label="其他" value="4"></el-option>-->
          </el-select>
         </el-form-item>
         <el-form-item prop="houseNumber" style="height: 0">
@@ -82,7 +81,6 @@
           this.form = {
             houseNumber: '',
             houseAddr: '',
-            houseType: '',
             houseArea: '',
             houseStatus: '',
             houseCover: '',
@@ -90,21 +88,22 @@
             soldPrice:'',
             addNote:'',
             ownerNumber:'',//注释掉ownerNumber
+            houseType: '',
           }
         },
         gotolink () {
-          // this.$emit('getHouse',this.form.houseNumber)
           console.log('ShowForm里边的ownerNumber '+this.form.ownerNumber)
           console.log('ShowForm里边的房屋编号: '+this.form.houseNumber)
+          console.log('ShowForm里边的租客编号: '+this.form.tenantNumber)
           this.$router.push({
             name:'order',
             query:{
               houseNumber:this.form.houseNumber,
               soldPrice:this.form.soldPrice,
-              ownerNumber:this.form.ownerNumber
+              ownerNumber:this.form.ownerNumber,
+              tenantNumber:this.form.tenantNumber
             }
           })
-          // this.$router.replace('/order')
         },
       }
     }

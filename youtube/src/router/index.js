@@ -8,12 +8,15 @@ import uploadHouse from "../components/zufang/uploadHouse";
 import visitHouse from "../components/visit/visitHouse";
 import Order from "../components/visit/Order";
 import ShowForm from "../components/visit/ShowForm";
-import ShowHouse from "../components/zufang/ShowHouse";
 import AdminIndex from "../components/admin/AdminIndex";
-import AdminMenu from "../components/admin/AdminMenu";
-import Header from "../components/admin/Header";
 import center from "../components/common/center";
 import DashBoard from "../components/admin/dashboard/index"
+import myOrder from "../components/admin/zuke/myOrder";
+import myHouse from "../components/admin/fangzhu/myHouse";
+import myRent from "../components/admin/fangzhu/myRent";
+import allHouse from "../components/admin/me/allHouse";
+import allOrder from "../components/admin/me/allOrder";
+
 
 Vue.use(Router)
 
@@ -72,9 +75,34 @@ export default new Router({
           path:'/admin/dashboard',
           name:'Dashboard',
           component:DashBoard
+        },
+        // 4/12
+        {
+          path:'/admin/zuke/myorder',
+          name:'myOrder',
+          component:myOrder,
+        },
+        {
+         path:'/admin/fangzhu/myhouse',
+          name:'myHouse',
+          component:myHouse,
+        },{
+          path:'/admin/fangzhu/myrent',
+          name:'myRent',
+          component:myRent
+        },{
+          path: '/admin/me/allhouse',
+          name: 'allHouse',
+          component:allHouse
+        },{
+          path: '/admin/me/allorder',
+          name:'allOrder',
+          component:allOrder
         }
       ]
-    }
+    },
+
+
   ]
 })
 

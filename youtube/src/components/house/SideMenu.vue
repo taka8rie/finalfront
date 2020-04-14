@@ -1,9 +1,10 @@
 <template>
   <el-menu
     class="categories"
-    default-active="0"
+    :default-active="this.$route.path"
     @select="handleSelect"
-    active-text-color="red">
+    active-text-color="red"
+    >
     <el-menu-item index="0">
       <i class="el-icon-menu"></i>
       <span slot="title">全部</span>
@@ -24,13 +25,23 @@
       <i class="el-icon-menu"></i>
       <span slot="title">其他</span>
     </el-menu-item>
-
   </el-menu>
 </template>
 
 <script>
     export default {
-        name: "SideMenu"
+        name: "SideMenu",
+      data() {
+          return {
+            cid:'' //这里需要修改
+          }
+      },
+      methods:{//handleSelect(key, keyPath),没用到keyPath
+        handleSelect(key) {
+          this.cid=key
+          this.$emit('indexSelect')
+        }
+      }
     }
 </script>
 
