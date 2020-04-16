@@ -2,7 +2,7 @@
   <div>
     <el-row style="height: 840px;">
 <!--  添加查找未审核的房屋按钮-->
-      <el-button type="success" @click="notCheck">查看未审核房屋</el-button>
+<!--      <el-button type="success" @click="notCheck">查看未审核房屋</el-button>-->
 
       <!--<search-bar></search-bar>-->
      <search-bar @onSearch="searchResult" ref="searchBar"></search-bar>
@@ -110,18 +110,19 @@
             ownerNumber:item.ownerNumber,//新增房屋对应的房主账号
             houseNumber: item.houseNumber,
             houseAddr: item.houseAddr,
-
-            // houseType:'测试的别墅',
-             houseType: item.houseType,
-
+             // houseType:'测试的别墅',
+            houseType: item.houseType,
             houseArea: item.houseArea,
-            houseStatus: item.houseStatus,
+            // houseStatus: item.houseStatus,
+            houseStatus:'',
             houseCover: item.houseCover,
             lastupdateTime: item.lastupdateTime,
             soldPrice:item.soldPrice,
             addNote:item.addNote,
             adminCheck:item.adminCheck,//是否对房屋进行审查
           }
+
+
         },
         notCheck() {
           // this.$router.push('/checkHouse')

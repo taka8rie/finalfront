@@ -12,13 +12,13 @@
             <el-input type="password" v-model="loginForm.password"
                       auto-complete="off" placeholder="密码"></el-input>
           </el-form-item>
-         <el-form-item>
-           <el-radio-group v-model="radio">
-             <el-radio :label="2">房东</el-radio>
-             <el-radio :label="3">租客</el-radio>
-             <el-radio :label="1">管理员</el-radio>
-           </el-radio-group>
-         </el-form-item>
+<!--         <el-form-item>-->
+<!--           <el-radio-group v-model="radio">-->
+<!--             <el-radio :label="2">房东</el-radio>-->
+<!--             <el-radio :label="3">租客</el-radio>-->
+<!--             <el-radio :label="1">管理员</el-radio>-->
+<!--           </el-radio-group>-->
+<!--         </el-form-item>-->
           <el-form-item style="width: 100%">
             <el-button type="primary" style="width: 100%;background: #505458;border: none" v-on:click="login">登录</el-button>
           </el-form-item>

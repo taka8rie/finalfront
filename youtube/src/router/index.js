@@ -19,7 +19,8 @@ import allOrder from "../components/admin/me/allOrder";
 import notCheck from "../components/admin/me/notCheck";
 import kanfang from "../components/visit/kanfang";
 import myYuyue from "../components/admin/zuke/myYuyue";
-
+import allYuyue from "../components/admin/me/allYuyue";
+import searchUser from "../components/admin/me/searchUser";
 Vue.use(Router)
 
 export default new Router({
@@ -113,6 +114,16 @@ export default new Router({
           path:'/admin/zuke/myYuyue',
           name:'myYuyue',
           component:myYuyue
+        },
+        {
+          path:'/admin/me/allYuyue',
+          name:'allYuyue',
+          component:allYuyue,
+        },
+        {
+          path:'/admin/me/searchUser',
+          name:'searchUser',
+          component:searchUser
         }
       ]
     },

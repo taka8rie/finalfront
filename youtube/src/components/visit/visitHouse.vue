@@ -4,18 +4,17 @@
         <search-bar @onSearch="searchResult" ref="searchBar"></search-bar>
 <!--  vSideMenu-->
       <v-side-menu @visitSelect="selectResult" ref="vSideMenu"></v-side-menu>
-      <!--这里想做传递数据的工作-->
-<!--        <Order v-show="false" v-bind:getHouse="fromHouse"></Order>-->
+
         <el-tooltip effect="dark" placement="right"
                     v-for="item in houses.slice((currentPage-1)*pageSize,currentPage*pageSize)" :key="item.houseNumber">
-          <p slot="content" style="font-size: 14px;margin-bottom: 6px;">{{item.addNote}}</p>
+          <p slot="content" style="font-size: 14px;margin-bottom: 6px;">房东要求: {{item.addNote}}</p>
           <p slot="content" style="font-size: 13px;margin-bottom: 6px">
-            <span>房屋状态{{item.houseStatus}}</span>
-            <span>房屋类型{{item.houseType}}</span>
-            <span>房屋面积{{item.houseArea}}</span>
-            <span>房主编号{{item.ownerNumber}}</span>
+<!--            <span>房屋状态{{item.houseStatus}}</span>-->
+            <span>房屋类型: {{item.houseType}}</span>
+            <span>房屋面积: {{item.houseArea}}</span>
+            <span>房主编号: {{item.ownerNumber}}</span>
           </p>
-          <p slot="content" style="width: 300px" class="abstract">{{item.addNote}}</p>
+          <p slot="content" style="width: 300px" class="abstract">房东要求: {{item.addNote}}</p>
           <el-card style="width: 135px;margin-bottom: 20px;height: 233px;float: left;margin-right: 15px" class="house"
                    bodyStyle="padding:10px" shadow="hover">
             <div class="cover" @click="editHouse(item)">
@@ -64,7 +63,7 @@
       methods:{
         loadHouses(){
           var _this = this
-          this.$axios.get('/houses').then(resp => {
+          this.$axios.get('/notOrderHouses').then(resp => {
             if (resp && resp.status === 200) {
               _this.houses = resp.data
             }
@@ -77,7 +76,7 @@
         searchResult () {
           var _this = this
           this.$axios
-            .get('/search?keywords=' + this.$refs.searchBar.keywords, {
+            .get('/searchIsOrder?keywords=' + this.$refs.searchBar.keywords, {
             }).then(resp => {
             if (resp && resp.status === 200) {
               _this.houses = resp.data
@@ -98,6 +97,21 @@
       ,
         editHouse(item) {
           this.$refs.edit.dialogFormVisible = true
+          //将房屋类型由int型显示为String
+          if (item.houseType == '1') {
+            item.houseType='1DK'
+          }else if (item.houseType == '2') {
+            item.houseType='别墅'
+          }else if (item.houseType == '3') {
+            item.houseType='3DK'
+          }else {
+            item.houseType='其他'
+          }
+
+          if (item.houseStatus == "0") {
+            item.houseStatus='未被订购'
+          }
+
           this.$refs.edit.form = {
             houseNumber: item.houseNumber,
             houseAddr: item.houseAddr,
@@ -109,7 +123,8 @@
             soldPrice:item.soldPrice,
             addNote:item.addNote,
             ownerNumber:item.ownerNumber,
-          }
+          };
+
         },
       }
     }

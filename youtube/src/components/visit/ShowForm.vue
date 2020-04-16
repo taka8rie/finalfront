@@ -48,6 +48,7 @@
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
+        <el-button type="success" @click="yuyue">预约看房</el-button>
         <el-button @click="dialogFormVisible = false">取 消</el-button>
         <el-button type="primary" @click="gotolink">订购</el-button>
       </div>
@@ -94,17 +95,25 @@
         gotolink () {
           console.log('ShowForm里边的ownerNumber '+this.form.ownerNumber)
           console.log('ShowForm里边的房屋编号: '+this.form.houseNumber)
-          console.log('ShowForm里边的租客编号: '+this.form.tenantNumber)
           this.$router.push({
             name:'order',
             query:{
               houseNumber:this.form.houseNumber,
               soldPrice:this.form.soldPrice,
               ownerNumber:this.form.ownerNumber,
-              tenantNumber:this.form.tenantNumber
+              // tenantNumber:this.form.tenantNumber
             }
           })
         },
+        yuyue() {
+            this.$router.push({
+              name:'kanfang',
+              query:{
+                houseNumber:this.form.houseNumber,
+                ownerNumber:this.form.ownerNumber,
+              }
+            })
+        }
       }
     }
 </script>

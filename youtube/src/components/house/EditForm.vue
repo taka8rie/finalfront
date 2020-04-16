@@ -17,9 +17,9 @@
           <el-input v-model="form.soldPrice" autocomplete="off"></el-input>
         </el-form-item>
 
-        <el-form-item label="房主登录账号" :label-width="formLabelWidth" prop="ownerNumber">
-          <el-input v-model="form.ownerNumber" autocomplete="off"></el-input>
-        </el-form-item>
+<!--        <el-form-item label="房主登录账号" :label-width="formLabelWidth" prop="ownerNumber">-->
+<!--          <el-input v-model="form.ownerNumber" autocomplete="off"></el-input>-->
+<!--        </el-form-item>-->
 
           <div class="block">
           <span class="demonstration">提交日期</span>
@@ -143,7 +143,7 @@
           console.log("审查的值为: "+this.form.adminCheck)
           this.$axios
             .post('/houses', {
-              ownerNumber:this.form.ownerNumber,
+              // ownerNumber:this.form.ownerNumber,
               houseNumber: this.form.houseNumber,
               houseAddr: this.form.houseAddr,
               houseType: this.form.houseType,

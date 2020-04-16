@@ -3,7 +3,7 @@
     <el-row style="margin: 18px 0px 0px 18px ">
     </el-row>
     <el-card style="margin: 18px 2%;width: 95%">
-      <Order @onSubmit="loadOrder()" ref="edit"></Order>
+      <Deals @onSubmit="loadOrder()" ref="edit"></Deals>
       <el-table
         :data="allorder"
         stripe
@@ -83,10 +83,10 @@
 </template>
 
 <script>
-import Order from "../../visit/Order";
+import Deals from "../../visit/Deals";
     export default {
         name: "allOrder",
-      components:{Order},
+      components:{Deals},
       data() {
           return{
             allorder:[],
@@ -107,6 +107,7 @@ import Order from "../../visit/Order";
       },
       methods:{
         loadOrder(){
+          this.$refs.Order.dialogFormVisible=false //不会马上跳出
           var _this = this
           this.$axios.get('/allorder').then(resp => {
             if (resp && resp.status === 200) {

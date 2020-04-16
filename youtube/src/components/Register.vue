@@ -9,8 +9,8 @@
     <el-form-item label="确认密码" prop="checkPass">
       <el-input type="password" v-model="ruleForm.checkPass" autocomplete="off"></el-input>
     </el-form-item>
-    <el-radio v-model="radio" label="2">房主</el-radio>
-    <el-radio v-model="radio" label="3">租客</el-radio>
+    <el-radio v-model="radio" label="3">房主</el-radio>
+    <el-radio v-model="radio" label="2">租客</el-radio>
 
     <el-form-item>
       <el-button type="primary" @click="submitForm('ruleForm')">提交</el-button>
@@ -79,7 +79,7 @@
           }) .then(successResponse => {
             if (successResponse.data.code === 200) {
             this.$alert('注册成功','提示',{confirmButtonText: '确定'})
-               this.$router.replace({path: '/'})
+               this.$router.replace({path: '/login'})
             } else {
               this.$alert(successResponse.data.message,'提示',{
                 confirmButtonText: '确定'
