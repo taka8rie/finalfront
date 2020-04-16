@@ -16,7 +16,9 @@ import myHouse from "../components/admin/fangzhu/myHouse";
 import myRent from "../components/admin/fangzhu/myRent";
 import allHouse from "../components/admin/me/allHouse";
 import allOrder from "../components/admin/me/allOrder";
-
+import notCheck from "../components/admin/me/notCheck";
+import kanfang from "../components/visit/kanfang";
+import myYuyue from "../components/admin/zuke/myYuyue";
 
 Vue.use(Router)
 
@@ -60,7 +62,11 @@ export default new Router({
         path: '/center',
         name: 'center',
         component:center,
-      }
+      },{
+      path:'/kanfang',
+        name:'kanfang',
+        component:kanfang,
+      },
       ]
     },
     // 4/10新增
@@ -98,6 +104,15 @@ export default new Router({
           path: '/admin/me/allorder',
           name:'allOrder',
           component:allOrder
+        },{
+          path: '/admin/me/notcheck',
+          name:'notCheck',
+          component:notCheck,
+        },
+        {
+          path:'/admin/zuke/myYuyue',
+          name:'myYuyue',
+          component:myYuyue
         }
       ]
     },
