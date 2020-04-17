@@ -5,14 +5,29 @@
       title="添加/修改房屋"
       :visible.sync="dialogFormVisible"
       @close="clear">
-      <el-form v-model="form" style="text-align: left" ref="dataForm">
+      <el-form v-model="form"  style="text-align: left" ref="dataForm">
         <el-form-item label="房屋面积" :label-width="formLabelWidth" prop="houseArea">
           <el-input v-model="form.houseArea" autocomplete="off" placeholder="这里填房屋面积"></el-input>
         </el-form-item>
+
         <el-form-item label="房屋状态" :label-width="formLabelWidth" prop="houseStatus">
           <el-input v-model="form.houseStatus" autocomplete="off" placeholder="0:“待租” 1:“已出租”
 "></el-input>
         </el-form-item>
+<!--        <el-form-item label="房屋状态" :label-width="formLabelWidth" prop="houseStatus">-->
+<!--          <el-select v-model="ruleForm.houseStatus" placeholder="请选择分类" >-->
+<!--            <el-option-->
+<!--              v-for="item in statusOptions"-->
+<!--              :key="item.value"-->
+<!--              :label="item.label"-->
+<!--              :value="item.value">-->
+<!--            </el-option>-->
+<!--          </el-select>-->
+<!--        </el-form-item>-->
+
+
+
+
         <el-form-item label="房屋价格" :label-width="formLabelWidth" prop="soldPrice">
           <el-input v-model="form.soldPrice" autocomplete="off"></el-input>
         </el-form-item>
@@ -39,7 +54,7 @@
         </el-form-item>
 
         <el-form-item label="房屋类型" :label-width="formLabelWidth" prop="houseType">
-          <el-select v-model="form.houseType" placeholder="请选择分类"  @change="haolong">
+          <el-select v-model="form.houseType" placeholder="请选择分类" >
             <el-option
               v-for="item in options"
               :key="item.value"
@@ -47,11 +62,17 @@
               :value="item.value">
             </el-option>
           </el-select>
-
         </el-form-item>
+
         <el-form-item prop="houseNumber" style="height: 0">
           <el-input type="hidden" v-model="form.houseNumber" autocomplete="off"></el-input>
         </el-form-item>
+
+        <el-form-item label="是否审核">
+          <el-switch v-model="form.adminCheck" :active-value="1" :inactive-value="0" disabled></el-switch>
+        </el-form-item>
+
+
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">取 消</el-button>
@@ -70,20 +91,31 @@
         return {
           //尝试替换为el-select
           options: [ {
-            value:"1",
+            value:"别墅",
             label:'别墅'
           },
             {
-              value: "2",
+              value: "普通",
               label: '普通'
             }, {
-              value: "3",
+              value: "3DK",
               label: '3DK'
             }, {
-              value: "4",
+              value: "其他",
               label: '其他'
             }],
           value:'',
+
+          // statusOptions:[
+          //   {
+          //     value:"未出租",
+          //     label:'未出租'
+          //   },
+          //   {
+          //     value: "已出租",
+          //     label: '已出租'
+          //   }
+          // ],
 
           dialogFormVisible: false,
           form: {
@@ -97,21 +129,29 @@
             lastupdateTime: '',
             soldPrice:'',
             addNote:'',
-            adminCheck:false,//房屋默认未审核
+            adminCheck:0,//房屋默认未审核
           },
-          formLabelWidth: '120px'
+          formLabelWidth: '90px',
+
+          // rules:{
+          //   houseArea:[{required:true,message:'请输入房屋面积',trigger:'blur'}],
+          //   houseStatus:[{required:true,message:'请选择房屋类型',trigger:'blur'}],
+          //   soldPrice:[{required:true,message:'请填入房屋价格',trigger:'blur'}],
+          //   houseAddr:[{required:true,message:'请填入房屋地址',trigger:'blur'}],
+          //   houseType:[{required:true,message:'请选择房屋类型',trigger:'blur'}],
+          // }
         }
       },
       methods: {
-        haolong(key) {
-          // 将房屋类型转换为label,并传递object.label值到Houses的houseType中
-          let object={};
-          object=this.options.find((item)=>{
-            return item.value===key;
-          })
-          // this.form.houseType=object.label
-          console.log('label值为: '+object.label)
-        },
+        // haolong(key) {
+        //   // 将房屋类型转换为label,并传递object.label值到Houses的houseType中
+        //   let object={};
+        //   object=this.options.find((item)=>{
+        //     return item.value===key;
+        //   })
+        //   // this.form.houseType=object.label
+        //   console.log('label值为: '+object.label)
+        // },
         clear () {
           this.form = {
             ownerNumber: '',
@@ -128,21 +168,7 @@
           }
         },
         onSubmit () {
-          console.log("审查的值为: "+this.form.adminCheck)
-          if (this.form.houseType == '1DK') {
-            this.form.houseType='1'
-          }else if (this.form.houseType == '别墅') {
-            this.form.houseType='2'
-          }else if (this.form.houseType == '3DK') {
-            this.form.houseType='3'
-          }else {
-            this.form.houseType='0'
-          }
-          if (this.form.houseStatus == "未被订购") {
-            this.form.houseStatus='0'
-          }else{
-            this.form.houseStatus='1'
-          }
+
 
           this.$axios
             .post('/houses', {
