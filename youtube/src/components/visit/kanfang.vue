@@ -1,6 +1,6 @@
 <template>
   <div>
-    <i class="el-icon-circle-plus-outline"  @click="dialogFormVisible = true"></i>
+<!--    <i class="el-icon-circle-plus-outline"  @click="dialogFormVisible = true"></i>-->
     <el-dialog
       title="看房申请表"
       :visible.sync="dialogFormVisible"
@@ -88,12 +88,14 @@
               // tenantNumber:this.form.tenantNumber,
               seeTime:this.form.seeTime,
               // handleTime:this.form.handleTime,
-            }).then(resp=>{
-            if (resp && resp.status == 200) {
+            }).then(successResponse=>{
+            if (successResponse.data.code === 200) {
               this.dialogFormVisible=false
               //将数据传递给父组件里边的onAdd,父组件使用@onAdd来接受
-              this.$toastMessage("返回成功", 3000)
+              this.$toastMessage("添加成功", 3000)
               this.$emit('onAdd')
+            }else{
+              this.$message("你已经添加过该预约订单了！")
             }
           })
         }
