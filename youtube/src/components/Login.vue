@@ -12,6 +12,14 @@
             <el-input type="password" v-model="loginForm.password"
                       auto-complete="off" placeholder="密码"></el-input>
           </el-form-item>
+
+          <el-form-item>
+            <el-input type="text" v-model="loginForm.yanzhengma"
+                      auto-complete="off" placeholder="验证码"></el-input>
+          </el-form-item>
+<!--          <codetest></codetest>-->
+          <identify :identifyCode="identifyCode"></identify>
+
 <!--         <el-form-item>-->
 <!--           <el-radio-group v-model="radio">-->
 <!--             <el-radio :label="2">房东</el-radio>-->
@@ -33,19 +41,30 @@
 
 <script>
 
+  import Codetest from "./yanzhengma/codetest";
+  import Identify from "./yanzhengma/identify";
   export default {
     name: 'Login',
+    components: {Identify, Codetest},
     data () {
       return {
         loginForm: {
           username: '',//loginForm里边的用户名
-         password: ''
+         password: '',
+          yanzhengma:'',
         },
         radio:3,
         responseResult: [],
         toastShow: false,
         toastText: '',
+        //验证码部分:
+        identifyCodes: "1234567890",
+        identifyCode: ""
       }
+    },
+    mounted() {
+      this.identifyCode = "";
+      this.makeCode(this.identifyCodes, 4);
     },
     methods: {
       login () {
@@ -57,7 +76,7 @@
             withCredentials:true,//获取session
           })
           .then(successResponse => {
-            if (successResponse.data.code === 200) {
+            if (successResponse.data.code === 200&&this.identifyCode===this.loginForm.yanzhengma) {
               this.$router.replace({path: '/index'})
               //获取session
               // sessionStorage.setItem('name',JSON.stringify(successResponse.data.username));
@@ -73,6 +92,22 @@
       },
       gotoregister(){
         this.$router.replace('/register')
+      },
+      //验证码部分:
+      randomNum(min, max) {
+        return Math.floor(Math.random() * (max - min) + min);
+      },
+      refreshCode() {
+        this.identifyCode = "";
+        this.makeCode(this.identifyCodes, 4);
+      },
+      makeCode(o, l) {
+        for (let i = 0; i < l; i++) {
+          this.identifyCode += this.identifyCodes[
+            this.randomNum(0, this.identifyCodes.length)
+            ];
+        }
+        console.log(this.identifyCode);
       }
     }
   }
