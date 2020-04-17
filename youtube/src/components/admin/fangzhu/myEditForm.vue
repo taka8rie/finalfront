@@ -1,29 +1,29 @@
 <template>
   <div>
-    <i class="el-icon-circle-plus-outline"  @click="dialogFormVisible = true"></i>
+    <el-button type="primary" @click="dialogFormVisible = true">上传房屋<i class="el-icon-upload el-icon--right"  ></i></el-button>
     <el-dialog
       title="添加/修改房屋"
       :visible.sync="dialogFormVisible"
       @close="clear">
-      <el-form v-model="form"  style="text-align: left" ref="dataForm">
+      <el-form v-model="form" :rules="rules" style="text-align: left" ref="dataForm">
         <el-form-item label="房屋面积" :label-width="formLabelWidth" prop="houseArea">
           <el-input v-model="form.houseArea" autocomplete="off" placeholder="这里填房屋面积"></el-input>
         </el-form-item>
 
-        <el-form-item label="房屋状态" :label-width="formLabelWidth" prop="houseStatus">
-          <el-input v-model="form.houseStatus" autocomplete="off" placeholder="0:“待租” 1:“已出租”
-"></el-input>
-        </el-form-item>
 <!--        <el-form-item label="房屋状态" :label-width="formLabelWidth" prop="houseStatus">-->
-<!--          <el-select v-model="ruleForm.houseStatus" placeholder="请选择分类" >-->
-<!--            <el-option-->
-<!--              v-for="item in statusOptions"-->
-<!--              :key="item.value"-->
-<!--              :label="item.label"-->
-<!--              :value="item.value">-->
-<!--            </el-option>-->
-<!--          </el-select>-->
+<!--          <el-input v-model="form.houseStatus" autocomplete="off" placeholder="0:“待租” 1:“已出租”-->
+<!--"></el-input>-->
 <!--        </el-form-item>-->
+        <el-form-item label="房屋状态" :label-width="formLabelWidth" prop="houseStatus">
+          <el-select v-model="form.houseStatus" placeholder="请选择分类" >
+            <el-option
+              v-for="item in statusOptions"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value">
+            </el-option>
+          </el-select>
+        </el-form-item>
 
 
 
@@ -106,16 +106,16 @@
             }],
           value:'',
 
-          // statusOptions:[
-          //   {
-          //     value:"未出租",
-          //     label:'未出租'
-          //   },
-          //   {
-          //     value: "已出租",
-          //     label: '已出租'
-          //   }
-          // ],
+          statusOptions:[
+            {
+              value:"未出租",
+              label:'未出租'
+            },
+            {
+              value: "已出租",
+              label: '已出租'
+            }
+          ],
 
           dialogFormVisible: false,
           form: {
@@ -133,13 +133,13 @@
           },
           formLabelWidth: '90px',
 
-          // rules:{
-          //   houseArea:[{required:true,message:'请输入房屋面积',trigger:'blur'}],
-          //   houseStatus:[{required:true,message:'请选择房屋类型',trigger:'blur'}],
-          //   soldPrice:[{required:true,message:'请填入房屋价格',trigger:'blur'}],
-          //   houseAddr:[{required:true,message:'请填入房屋地址',trigger:'blur'}],
-          //   houseType:[{required:true,message:'请选择房屋类型',trigger:'blur'}],
-          // }
+          rules:{
+            houseArea:[{required:true,message:'请输入房屋面积',trigger:'blur'}],
+            houseStatus:[{required:true,message:'请选择房屋类型',trigger:'blur'}],
+            soldPrice:[{required:true,message:'请填入房屋价格',trigger:'blur'}],
+            houseAddr:[{required:true,message:'请填入房屋地址',trigger:'blur'}],
+            houseType:[{required:true,message:'请选择房屋类型',trigger:'blur'}],
+          }
         }
       },
       methods: {
@@ -164,7 +164,7 @@
             lastupdateTime: '',
             soldPrice:'',
             addNote:'',
-            adminCheck:false,
+            adminCheck:0,//修改了这里！ 4.17
           }
         },
         onSubmit () {
