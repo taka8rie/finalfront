@@ -1,6 +1,7 @@
 <template>
   <div>
-    <i class="el-icon-circle-plus-outline"  @click="dialogFormVisible = true"></i>
+    <el-button type="primary" @click="dialogFormVisible = true">上传<i class="el-icon-upload el-icon--right"  ></i></el-button>
+
     <el-dialog
       title="订单详情"
       :visible.sync="dialogFormVisible"

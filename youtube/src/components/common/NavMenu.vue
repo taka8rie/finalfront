@@ -25,8 +25,8 @@
       return {
         navList: [
           {name: '/index', navItem: '首页'},
-          {name: '/zufang', navItem: '我要出租'},//jotter
-          {name: '/house', navItem: '房子'},//library
+          // {name: '/zufang', navItem: '我要出租'},//jotter
+          // {name: '/house', navItem: '房子'},//library
           {name: '/center', navItem: '个人中心'}
         ]
       }

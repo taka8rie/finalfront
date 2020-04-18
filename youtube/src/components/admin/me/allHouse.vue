@@ -3,7 +3,7 @@
     <el-row style="margin: 18px 0px 0px 18px ">
     </el-row>
     <el-card style="margin: 18px 2%;width: 95%">
-      <edit-form @onSubmit="loadHouses()" ref="edit"></edit-form>
+      <admin-edit-form @onSubmit="loadHouses()" ref="edit"></admin-edit-form>
       <el-table
         :data="allhouses"
         stripe
@@ -79,10 +79,11 @@
 </template>
 
 <script>
-  import EditForm from "../../house/EditForm";
+  // import EditForm from "../../house/EditForm";
+  import adminEditForm from "./adminEditForm";
     export default {
         name: "allHouse",
-      components:{EditForm},
+      components:{adminEditForm},
       data() {
           return{
             allhouses:[],
@@ -133,16 +134,7 @@
         },
         editHouse(item) {
           this.$refs.edit.dialogFormVisible = true
-          //将房屋类型由int型显示为String
-          if (item.houseType == '1') {
-            item.houseType='1DK'
-          }else if (item.houseType == '2') {
-            item.houseType='别墅'
-          }else if (item.houseType == '3') {
-            item.houseType='3DK'
-          }else {
-            item.houseType='其他'
-          }
+
           this.$refs.edit.form = {
             ownerNumber:item.ownerNumber,//新增房屋对应的房主账号
             houseNumber: item.houseNumber,

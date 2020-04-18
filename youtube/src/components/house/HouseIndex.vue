@@ -8,7 +8,6 @@
       <!--<house></house>-->
       <houses class="houses-area" ref="houseArea"></houses>
     </el-main>
-
   </el-container>
 </template>
 

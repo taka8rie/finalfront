@@ -16,28 +16,28 @@
         <el-form-item label="房屋价格" :label-width="formLabelWidth" prop="soldPrice">
           <el-input v-model="form.soldPrice" autocomplete="off"></el-input>
         </el-form-item>
-<!--        <el-form-item label="提交日期" :label-width="formLabelWidth" prop="lastupdateTime">-->
-<!--          <el-input v-model="form.lastupdateTime" autocomplete="off"></el-input>-->
-<!--        </el-form-item>-->
+        <!--        <el-form-item label="提交日期" :label-width="formLabelWidth" prop="lastupdateTime">-->
+        <!--          <el-input v-model="form.lastupdateTime" autocomplete="off"></el-input>-->
+        <!--        </el-form-item>-->
 
         <el-form-item label="房屋地点" :label-width="formLabelWidth" prop="houseAddr">
           <el-input v-model="form.houseAddr" autocomplete="off"></el-input>
         </el-form-item>
-<!--        <el-form-item label="房屋图片" :label-width="formLabelWidth" prop="houseCover">-->
-<!--          <el-input v-model="form.houseCover" autocomplete="off" placeholder="图片 URL"></el-input>-->
-<!--          <img-upload @onUpload="uploadImg" ref="imgUpload"></img-upload>-->
-<!--        </el-form-item>-->
+        <!--        <el-form-item label="房屋图片" :label-width="formLabelWidth" prop="houseCover">-->
+        <!--          <el-input v-model="form.houseCover" autocomplete="off" placeholder="图片 URL"></el-input>-->
+        <!--          <img-upload @onUpload="uploadImg" ref="imgUpload"></img-upload>-->
+        <!--        </el-form-item>-->
         <el-form-item label="房主要求" :label-width="formLabelWidth" prop="addNote">
           <el-input type="textarea" v-model="form.addNote" autocomplete="off"></el-input>
         </el-form-item>
 
         <el-form-item label="房屋类型" :label-width="formLabelWidth" prop="houseType">
           <el-select v-model="form.houseType" placeholder="请选择分类">
-<!--            <el-option label="别墅" value="1"></el-option>-->
-<!--            <el-option label="普通" value="2"></el-option>-->
-<!--            <el-option label="3DK" value="3"></el-option>-->
-<!--            <el-option label="其他" value="4"></el-option>-->
-         </el-select>
+            <!--            <el-option label="别墅" value="1"></el-option>-->
+            <!--            <el-option label="普通" value="2"></el-option>-->
+            <!--            <el-option label="3DK" value="3"></el-option>-->
+            <!--            <el-option label="其他" value="4"></el-option>-->
+          </el-select>
         </el-form-item>
         <el-form-item prop="houseNumber" style="height: 0">
           <el-input type="hidden" v-model="form.houseNumber" autocomplete="off"></el-input>
@@ -58,7 +58,7 @@
 
 <script>
     export default {
-        name: "ShowForm",
+        name: "NoLoginShowForm",
       data () {
         return {
           dialogFormVisible: false,
@@ -93,26 +93,12 @@
           }
         },
         gotolink () {
-          console.log('ShowForm里边的ownerNumber '+this.form.ownerNumber)
-          console.log('ShowForm里边的房屋编号: '+this.form.houseNumber)
-          this.$router.push({
-            name:'order',
-            query:{
-              houseNumber:this.form.houseNumber,
-              soldPrice:this.form.soldPrice,
-              ownerNumber:this.form.ownerNumber,
-              // tenantNumber:this.form.tenantNumber
-            }
-          })
+          this.$message("请登录账号再进行操作"),
+            this.$router.push({path: '/login'})
         },
         yuyue() {
-            this.$router.push({
-              name:'kanfang',
-              query:{
-                houseNumber:this.form.houseNumber,
-                ownerNumber:this.form.ownerNumber,
-              }
-            })
+          this.$message("请登录账号再进行操作"),
+            this.$router.push({path: '/login'})
         }
       }
     }

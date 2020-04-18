@@ -18,7 +18,7 @@
                       auto-complete="off" placeholder="验证码"></el-input>
           </el-form-item>
 <!--          <codetest></codetest>-->
-          <identify :identifyCode="identifyCode"></identify>
+          <identify :identifyCode="identifyCode" ></identify>
 
 <!--         <el-form-item>-->
 <!--           <el-radio-group v-model="radio">-->
@@ -84,7 +84,7 @@
               // console.log("session is : "+myName)
             }else{
             //这里需要填充
-              this.$toastMessage({message:'用户名和密码错误',time:3000})
+              this.$toastMessage({message:'表格的信息填写错误',time:3000})
             }
           })
           .catch(failResponse => {

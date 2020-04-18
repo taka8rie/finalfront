@@ -21,6 +21,7 @@ import kanfang from "../components/visit/kanfang";
 import myYuyue from "../components/admin/zuke/myYuyue";
 import allYuyue from "../components/admin/me/allYuyue";
 import searchUser from "../components/admin/me/searchUser";
+import HomePage from "../components/home/HomePage";
 Vue.use(Router)
 
 export default new Router({
@@ -33,7 +34,13 @@ export default new Router({
     },{
       path: '/register',
       component:Register
-    },//以下为尝试新增
+    },
+    {
+      path:'/homepage',
+      component:HomePage
+    },
+
+    //以下为尝试新增
     {
     path:'/home',
       component:Home,
@@ -81,7 +88,7 @@ export default new Router({
         {
           path:'/admin/dashboard',
           name:'Dashboard',
-          component:DashBoard
+          redirect:'/index'
         },
         // 4/12
         {

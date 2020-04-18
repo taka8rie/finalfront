@@ -6,7 +6,7 @@
       :visible.sync="dialogFormVisible"
       @close="clear">
 
-      <el-form v-model="form" style="text-align: left" ref="dataForm">
+      <el-form v-model="form" :rules="rules" style="text-align: left" ref="dataForm">
 <!--        <el-form-item label="账单编号" :label-width="formLabelWidth" prop="dealNumber">-->
 <!--          <el-input v-model="form.dealNumber" autocomplete="off" placeholder="这里填订单编号"></el-input>-->
 <!--        </el-form-item>-->
@@ -20,13 +20,22 @@
           <el-input v-model="form.ownerNumber" autocomplete="off"></el-input>
         </el-form-item>
 
-<!--        <el-form-item label="租客编号" :label-width="formLabelWidth" prop="ownerNumber">-->
-<!--          <el-input v-model="form.ownerNumber" autocomplete="off"></el-input>-->
-<!--        </el-form-item>-->
 
-        <el-form-item label="管理员编号" :label-width="formLabelWidth" prop="staffNumber">
-          <el-input v-model="form.staffNumber" autocomplete="off"></el-input>
+
+<!--        <el-form-item label="管理员编号" :label-width="formLabelWidth" prop="staffNumber">-->
+<!--          <el-input v-model="form.staffNumber" autocomplete="off"></el-input>-->
+<!--        </el-form-item>-->
+        <el-form-item label="客服人员:" :label-width="formLabelWidth" prop="houseType">
+          <el-select v-model="form.staffNumber" placeholder="请选择分类"  >
+            <el-option
+              v-for="item in options"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value">
+            </el-option>
+          </el-select>
         </el-form-item>
+
 
         <div class="block">
           <span class="demonstration">租房起始时间</span>
@@ -72,6 +81,19 @@
       name: "Order",
       data(){
         return {
+          options: [ {
+            value:"3",
+            label:'许昊龙'
+          },
+            {
+              value: "1",
+              label: '侯国玉'
+            }, {
+              value: "2",
+              label: '山泥若'
+            }],
+          value:'',
+
           dialogFormVisible: true,//点击就跳出表格
           form: {
             houseNumber:this.$route.query.houseNumber,
@@ -82,9 +104,13 @@
             endTime:'',
             price:this.$route.query.soldPrice,
             staffNumber:'',
-            // handleTime:'',
+
           },
-          formLabelWidth: '120px'
+          formLabelWidth: '90px',
+          rules:{
+            beginTime:[{required:true,message:'请选择开始时间',trigger:'blur'}],
+            endTime:[{required:true,message:'请选择结束时间',trigger:'blur'}],
+          }
         }
       },
       methods:{
@@ -111,14 +137,16 @@
             claim:this.form.claim,
             endTime:this.form.endTime,
             price:this.form.price,
-            staffNumber:this.form.staffNumber,
+             staffNumber:this.form.staffNumber,
+
             // handleTime:this.form.handleTime,
           }).then(resp=>{
             if (resp && resp.status == 200) {
               this.dialogFormVisible=false
               //将数据传递给父组件里边的onAdd,父组件使用@onAdd来接受
-              this.$toastMessage("返回成功", 3000)
-              this.$emit('onAdd')
+              // this.$toastMessage("返回成功", 3000)
+              this.$message("添加订单成功！"),
+                this.$router.push({path: '/index'})
             }
           })
         }

@@ -72,7 +72,6 @@
 </template>
 
 <script>
-  import EditForm from "../../house/EditForm";
   import myEditForm from "./myEditForm";
     export default {
         name: "myHouse",
@@ -127,22 +126,7 @@
         },
         editHouse(item) {
           this.$refs.edit.dialogFormVisible = true
-          //将房屋类型由int型显示为String
-          if (item.houseType == '1') {
-            item.houseType='1DK'
-          }else if (item.houseType == '2') {
-            item.houseType='别墅'
-          }else if (item.houseType == '3') {
-            item.houseType='3DK'
-          }else {
-            item.houseType = '其他'
-          }
 
-          if (item.houseStatus == '1') {
-            item.houseStatus='已被订购'
-          }else {
-            item.houseStatus = '未被订购'
-          }
 
           this.$refs.edit.form = {
             ownerNumber:item.ownerNumber,//新增房屋对应的房主账号

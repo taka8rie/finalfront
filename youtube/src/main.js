@@ -7,9 +7,11 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import toastMessage from "./components/alert/ToastMessage";
 import visitHouse from "./components/visit/visitHouse";
+import identify from "./components/yanzhengma/identify";
 
 import store from './store'
 
+Vue.use(identify)
 // import store from './store'
 Vue.use(toastMessage)
 // Vue.use(Vuex)

@@ -5,23 +5,23 @@
     @select="handleSelect"
     active-text-color="red"
     >
-    <el-menu-item index="0">
+    <el-menu-item index="全部">
       <i class="el-icon-menu"></i>
       <span slot="title">全部</span>
     </el-menu-item>
-    <el-menu-item index="1">
+    <el-menu-item index="别墅">
       <i class="el-icon-menu"></i>
       <span slot="title">别墅</span>
     </el-menu-item>
-    <el-menu-item index="2">
+    <el-menu-item index="普通">
       <i class="el-icon-menu"></i>
       <span slot="title">普通</span>
     </el-menu-item>
-    <el-menu-item index="3">
+    <el-menu-item index="3DK">
       <i class="el-icon-menu"></i>
       <span slot="title">3DK</span>
     </el-menu-item>
-    <el-menu-item index="4">
+    <el-menu-item index="其他">
       <i class="el-icon-menu"></i>
       <span slot="title">其他</span>
     </el-menu-item>

@@ -3,7 +3,7 @@
     <el-row style="margin: 18px 0px 0px 18px ">
     </el-row>
     <el-card style="margin: 18px 2%;width: 95%">
-      <edit-form @onSubmit="loadHouses()" ref="edit"></edit-form>
+      <admin-edit-form @onSubmit="loadHouses()" ref="edit"></admin-edit-form>
       <el-table
         :data="uncheck"
         stripe
@@ -74,10 +74,10 @@
 </template>
 
 <script>
-  import EditForm from "../../house/EditForm";
+  import adminEditForm from "./adminEditForm";
     export default {
         name: "notCheck",
-      components:{EditForm},
+      components:{adminEditForm},
       data() {
           return{
             uncheck:[],

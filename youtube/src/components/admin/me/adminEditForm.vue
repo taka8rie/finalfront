@@ -17,11 +17,14 @@
           <el-input v-model="form.soldPrice" autocomplete="off"></el-input>
         </el-form-item>
 
-<!--        <el-form-item label="房主登录账号" :label-width="formLabelWidth" prop="ownerNumber">-->
-<!--          <el-input v-model="form.ownerNumber" autocomplete="off"></el-input>-->
-<!--        </el-form-item>-->
+        <el-form-item label="房主账号" :label-width="formLabelWidth" prop="ownerNumber">
+          <el-input v-model="form.ownerNumber" autocomplete="off"></el-input>
+        </el-form-item>
 
-          <div class="block">
+
+
+
+        <div class="block">
           <span class="demonstration">提交日期</span>
           <el-date-picker
             v-model="form.lastupdateTime"
@@ -29,7 +32,7 @@
             placeholder="选择日期">
           </el-date-picker>
         </div>
-<!--        </el-form-item>-->
+        <!--        </el-form-item>-->
         <el-form-item label="房屋地点" :label-width="formLabelWidth" prop="houseAddr">
           <el-input v-model="form.houseAddr" autocomplete="off"></el-input>
         </el-form-item>
@@ -42,12 +45,7 @@
         </el-form-item>
 
         <el-form-item label="房屋类型" :label-width="formLabelWidth" prop="houseType">
-          <el-select v-model="form.houseType" placeholder="请选择分类"  @change="haolong">
-<!--            <el-option label="别墅" value="1"></el-option>-->
-<!--            <el-option label="普通" value="2"></el-option>-->
-<!--            <el-option label="3DK" value="3"></el-option>-->
-<!--            <el-option label="其他" value="4"></el-option>-->
-
+          <el-select v-model="form.houseType" placeholder="请选择分类"  >
             <el-option
               v-for="item in options"
               :key="item.value"
@@ -55,15 +53,16 @@
               :value="item.value">
             </el-option>
           </el-select>
+
         </el-form-item>
-<!--添加审核选项-->
+        <el-form-item prop="houseNumber" style="height: 0">
+          <el-input type="hidden" v-model="form.houseNumber" autocomplete="off"></el-input>
+        </el-form-item>
+
         <el-form-item label="是否审核">
           <el-switch v-model="form.adminCheck" :active-value="1" :inactive-value="0"></el-switch>
         </el-form-item>
 
-        <el-form-item prop="houseNumber" style="height: 0">
-          <el-input type="hidden" v-model="form.houseNumber" autocomplete="off"></el-input>
-        </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">取 消</el-button>
@@ -74,10 +73,10 @@
 </template>
 
 <script>
-    import ImgUpload from "./ImgUpload";
+  import ImgUpload from "../../house/ImgUpload";
     export default {
-        name: "EditForm",
-      components: {ImgUpload},
+        name: "adminEditForm",
+      components:{ImgUpload},
       data () {
         return {
           //尝试替换为el-select
@@ -114,16 +113,16 @@
           formLabelWidth: '120px'
         }
       },
-      methods: {
-        haolong(key) {
-          // 将房屋类型转换为label,并传递object.label值到Houses的houseType中
-          let object={};
-          object=this.options.find((item)=>{
-            return item.value===key;
-          })
-          // this.form.houseType=object.label
-          console.log('label值为: '+object.label)
-        },
+      methods:{
+        // haolong(key) {
+        // 将房屋类型转换为label,并传递object.label值到Houses的houseType中
+        //   let object={};
+        //   object=this.options.find((item)=>{
+        //     return item.value===key;
+        //   })
+        //   // this.form.houseType=object.label
+        //   console.log('label值为: '+object.label)
+        // },
         clear () {
           this.form = {
             ownerNumber: '',
@@ -140,7 +139,6 @@
           }
         },
         onSubmit () {
-          console.log("审查的值为: "+this.form.adminCheck)
           this.$axios
             .post('/houses', {
               // ownerNumber:this.form.ownerNumber,
@@ -153,6 +151,7 @@
               lastupdateTime: this.form.lastupdateTime,
               soldPrice:this.form.soldPrice,
               addNote:this.form.addNote,
+              ownerNumber:this.form.ownerNumber,
               // adminCheck:this.form.adminCheck,//是否对房屋进行审查
               adminCheck:this.form.adminCheck
 
@@ -161,7 +160,7 @@
               this.dialogFormVisible = false
               this.$emit('onSubmit')
             }
-          })
+          });
         },
         uploadImg() {
           this.form.houseCover=this.$refs.imgUpload.url

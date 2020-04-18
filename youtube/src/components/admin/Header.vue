@@ -19,7 +19,8 @@
         this.$axios.get('/logout').then(resp => {
           if (resp && resp.data.code === 200) {
             _this.$store.commit('logout')
-            _this.$router.replace('/')//由/index改为/
+            this.$message("您已退出账号！"),
+              this.$router.push({path: '/login'})
             //清空路由
             const newRouter = createRouter()
             _this.$router.matcher=newRouter.matcher

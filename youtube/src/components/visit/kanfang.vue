@@ -95,7 +95,8 @@
               this.$toastMessage("添加成功", 3000)
               this.$emit('onAdd')
             }else{
-              this.$message("你已经添加过该预约订单了！")
+              this.$message("你已经添加过该预约订单了！"),
+                this.$router.push({path: '/index'})
             }
           })
         }

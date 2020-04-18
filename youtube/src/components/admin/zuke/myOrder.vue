@@ -44,25 +44,20 @@
         label="处理人员工号"
         fit>
         </el-table-column>
-<!--        <el-table-column-->
-<!--          fixed="right"-->
-<!--          label="操作"-->
-<!--          width="120">-->
-<!--          <template slot-scope="scope">-->
-<!--            <el-button-->
-<!--              @click.native.prevent="editBook(scope.row)"-->
-<!--              type="text"-->
-<!--              size="small">-->
-<!--              编辑-->
-<!--            </el-button>-->
-<!--            <el-button-->
-<!--              @click.native.prevent="deleteBook(scope.row.id)"-->
-<!--              type="text"-->
-<!--              size="small">-->
-<!--              移除-->
-<!--            </el-button>-->
-<!--          </template>-->
-<!--        </el-table-column>-->
+
+        <el-table-column
+          fixed="right"
+          label="操作"
+          width="120">
+          <template slot-scope="scope">
+            <el-button
+              @click.native.prevent="deleteMyOrder(scope.row.dealNumber)"
+              type="text"
+              size="small">
+              解除合同
+            </el-button>
+          </template>
+        </el-table-column>
       </el-table>
 <!--      <div style="margin: 20px 0 20px 0;float: left">-->
 <!--        <el-button>取消选择</el-button>-->
@@ -104,6 +99,26 @@
         handleCurrentChange: function (currentPage) {
           this.currentPage = currentPage
           console.log(this.currentPage)
+        },
+        deleteMyOrder(id) {
+          this.$confirm('您确定要解除合同吗？该操作无法恢复！', '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }).then(() => {
+              this.$axios
+                .post('/admindeleteorder', {dealNumber: id}).then(resp => {
+                if (resp && resp.status === 200) {
+                  this.loadHouses()
+                }
+              })
+            }
+          ).catch(() => {
+            this.$message({
+              type: 'info',
+              message: '已取消删除'
+            })
+          })
         }
 
       }
