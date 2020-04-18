@@ -37,7 +37,8 @@
         this.$axios.get('/logout').then(resp=>{
           if (resp.data.code == 200) {
             _this.$store.commit('logout')
-            _this.$router.push('/')
+            this.$message("您已退出账号！"),
+              this.$router.push({path: '/login'})
           }
           }
         )
