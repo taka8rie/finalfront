@@ -2,7 +2,22 @@
     <div>
       <el-row style="height: 840px;">
         <search-bar @onSearch="searchResult" ref="searchBar"></search-bar>
-<!--  vSideMenu-->
+
+        <div style="position:absolute ;
+              margin-left: 50%;
+              right: 50px;top: 0px;width: 200px;">
+        <el-button size="small" type="primary" icon="el-icon-sort" @click="sort('soldPrice')">价格降序</el-button>
+       </div>
+
+        <div style="position:absolute ;
+              margin-left: 50%;
+              right: 200px;top: 0px;width: 200px;">
+          <el-button size="small" type="primary" icon="el-icon-sort" @click="sortup('soldPrice')">价格升序</el-button>
+        </div>
+
+
+
+        <!--  vSideMenu-->
       <v-side-menu @visitSelect="selectResult" ref="vSideMenu"></v-side-menu>
 
         <el-tooltip effect="dark" placement="right"
@@ -14,8 +29,8 @@
             <span>房屋面积: {{item.houseArea}}</span>
             <span>房主编号: {{item.ownerNumber}}</span>
           </p>
-          <p slot="content" style="width: 300px" class="abstract">房东要求: {{item.addNote}}</p>
-          <el-card style="width: 135px;margin-bottom: 20px;height: 233px;float: left;margin-right: 15px" class="house"
+          <p slot="content" style="width: 300px" class="abstract">售价: {{item.soldPrice}}</p>
+          <el-card style="width: 150px;margin-bottom: 20px;height: 250px;float: left;margin-right: 15px" class="house"
                    bodyStyle="padding:10px" shadow="hover">
             <div class="cover" @click="editHouse(item)">
               <img :src="item.houseCover" alt="封面">
@@ -25,11 +40,10 @@
                 <a href="">房屋地址:{{item.houseAddr}}</a>
               </div>
             </div>
-            <div class="lastupdate">{{item.lastupdateTime}}</div>
+            <div class="lastupdate">上架时间:{{item.lastupdateTime}}</div>
           </el-card>
         </el-tooltip>
         <show-form @onSumbit="loadHouses()" ref="edit"></show-form>
-
       </el-row>
       <el-row>
         <el-pagination
@@ -55,12 +69,35 @@
           houses:[],
           currentPage:1,
           pageSize:17,
+          //排序
+          sortType:'soldPrice',
         }
       },
       mounted:function () {
         this.loadHouses()
       },
+
+
+
       methods:{
+          //排序
+        sort(type) {
+          this.sortType=type;
+          this.houses.sort(this.compare(type));
+        },
+        compare(attr) {
+          return function (a,b) {
+          var val1=a[attr];
+          var val2=b[attr];
+          return val2-val1;
+          }
+        },
+        sortup(type) {
+          this.sortType=type;
+          this.houses.sort(this.compare(type));
+          this.houses.reverse();
+        },
+
         loadHouses(){
           var _this = this
           this.$axios.get('/notOrderHouses').then(resp => {
@@ -93,8 +130,7 @@
               _this.houses = resp.data
             }
           })
-        }
-      ,
+        },
         editHouse(item) {
           this.$refs.edit.dialogFormVisible = true
           this.$refs.edit.form = {
@@ -109,10 +145,10 @@
             addNote:item.addNote,
             ownerNumber:item.ownerNumber,
           };
-
         },
       }
     }
+
 </script>
 
 <style scoped>
