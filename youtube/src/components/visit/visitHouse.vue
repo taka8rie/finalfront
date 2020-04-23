@@ -15,6 +15,12 @@
           <el-button size="small" type="primary" icon="el-icon-sort" @click="sortup('soldPrice')">价格升序</el-button>
         </div>
 
+        <div style="position:absolute ;
+              margin-left: 50%;
+              right: 300px;top: 0px;width: 200px;">
+          <el-button size="small" type="primary" icon="el-icon-sort" @click="recommend">推荐房屋</el-button>
+        </div>
+
 
 
         <!--  vSideMenu-->
@@ -80,6 +86,13 @@
 
 
       methods:{
+        recommend() {
+          this.$axios.post('/recommendhouse').then(resp => {
+            if (resp && resp.status === 200) {
+              this.houses = resp.data
+            }
+          })
+        },
           //排序
         sort(type) {
           this.sortType=type;
