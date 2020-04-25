@@ -5,10 +5,12 @@
     <el-card style="margin: 18px 2%;width: 95%">
       <admin-edit-form @onSubmit="loadHouses()" ref="edit"></admin-edit-form>
       <el-table
-        :data="allhouses"
+        :data="allhouses.slice((currentPage-1)*pageSize,currentPage*pageSize)"
         stripe
         style="width: 100%"
-        :max-height="tableHeight">
+        :max-height="tableHeight"
+
+      >
         <el-table-column
 
           width="55">
@@ -74,6 +76,14 @@
       <!--        <el-button>取消选择</el-button>-->
       <!--        <el-button>批量删除</el-button>-->
       <!--      </div>-->
+
+      <el-pagination
+        @current-change="handleCurrentChange"
+        :current-page="currentPage"
+        :page-size="pageSize"
+        :total=allhouses.length>
+      </el-pagination>
+
     </el-card>
   </div>
 </template>
@@ -87,6 +97,9 @@
       data() {
           return{
             allhouses:[],
+            currentPage:1,
+            pageSize:2,
+            sortType:'houseNumber',
           }
       },
       created() {
@@ -105,9 +118,9 @@
       methods:{
         loadHouses(){
           var _this = this
-          this.$axios.get('/myhouses').then(resp => {
+          this.$axios.get('/houses').then(resp => {
             if (resp && resp.status === 200) {
-              _this.myhouses = resp.data
+              _this.allhouses = resp.data
             }
           })
         },
@@ -134,7 +147,6 @@
         },
         editHouse(item) {
           this.$refs.edit.dialogFormVisible = true
-
           this.$refs.edit.form = {
             ownerNumber:item.ownerNumber,//新增房屋对应的房主账号
             houseNumber: item.houseNumber,
@@ -149,7 +161,11 @@
             addNote:item.addNote,
             adminCheck:item.adminCheck,//是否对房屋进行审查
           }
-        }
+        },
+        handleCurrentChange: function (currentPage) {
+          this.currentPage = currentPage
+          console.log(this.currentPage)
+        },
 
       }
     }
