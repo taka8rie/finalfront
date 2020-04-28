@@ -18,8 +18,9 @@
                       auto-complete="off" placeholder="验证码"></el-input>
           </el-form-item>
 <!--          <codetest></codetest>-->
-          <identify :identifyCode="identifyCode" ></identify>
-
+          <div @click="refreshCode">
+          <identify :identifyCode="identifyCode"  ></identify>
+          </div>
 <!--         <el-form-item>-->
 <!--           <el-radio-group v-model="radio">-->
 <!--             <el-radio :label="2">房东</el-radio>-->
@@ -30,10 +31,23 @@
           <el-form-item style="width: 100%">
             <el-button type="primary" style="width: 100%;background: #505458;border: none" v-on:click="login">登录</el-button>
           </el-form-item>
+
+          <el-form-item style="width: 100%">
+          <el-button type="primary" style="width: 100%;background: #505458;border: none" v-on:click="forget">忘记密码?</el-button>
+          </el-form-item>
+
+
+          <el-form-item>
+            <el-button style="float: right" type="primary" @click="gotoregister" >注册</el-button>
+            <el-button style="float:left" type="warning" @click="goMessage" >联系管理员</el-button>
+          </el-form-item>
+
+
+
         </el-form>
-      <el-form-item>
-        <el-button type="primary" @click="gotoregister">注册</el-button>
-      </el-form-item>
+
+
+
    </el-form>
     </body>
 
@@ -45,12 +59,12 @@
   import Identify from "./yanzhengma/identify";
   export default {
     name: 'Login',
-    components: {Identify, Codetest},
+    components: {Identify},
     data () {
       return {
         loginForm: {
           username: '',//loginForm里边的用户名
-         password: '',
+          password: '',
           yanzhengma:'',
         },
         radio:3,
@@ -67,6 +81,10 @@
       this.makeCode(this.identifyCodes, 4);
     },
     methods: {
+      forget() {
+        this.$router.push({path: '/forgetPassword'})
+      }
+      ,
       login () {
         this.$axios
           .post('/login', {
@@ -82,9 +100,13 @@
               // sessionStorage.setItem('name',JSON.stringify(successResponse.data.username));
               // let myName=JSON.parse(sessionStorage.getItem("name"));
               // console.log("session is : "+myName)
-            }else{
+            }else if(successResponse.data.code===777){
             //这里需要填充
-              this.$toastMessage({message:'表格的信息填写错误',time:3000})
+            //   this.$toastMessage({message:'你的账户已被冻结',time:3000})
+              this.$message("你的账户已被冻结,请联系管理员申请解冻")
+            }
+            else {
+              this.$message("表格信息错误")
             }
           })
           .catch(failResponse => {
@@ -108,6 +130,10 @@
             ];
         }
         console.log(this.identifyCode);
+      },
+      //4.28
+      goMessage() {
+        this.$router.push('/say')
       }
     }
   }
