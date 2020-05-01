@@ -8,9 +8,35 @@ import 'element-ui/lib/theme-chalk/index.css'
 import toastMessage from "./components/alert/ToastMessage";
 import visitHouse from "./components/visit/visitHouse";
 import identify from "./components/yanzhengma/identify";
-
+import GoEasy from 'goeasy'
 import store from './store'
+import {Message} from "element-ui";
+//环状图 4.30
+import VeLine from 'v-charts/lib/ring.common'
+Vue.component(VeLine.name, VeLine)
 
+
+
+
+//即时通信调用goEasy 4.27
+Vue.prototype.$goEasy=new GoEasy({
+  host:'hangzhou.goeasy.io',
+  appkey:'BC-43d967d060864265b1e442aceb713772',
+  onConnected: function() {
+    console.log('连接成功！')
+
+  },
+  onDisconnected: function() {
+    console.log('连接断开！')
+  },
+  onConnectFailed: function(error) {
+    console.log('连接失败或错误！')
+  }
+})
+
+// Vue.use(Message)
+// Vue.prototype.$message=Message
+//验证码
 Vue.use(identify)
 // import store from './store'
 Vue.use(toastMessage)
