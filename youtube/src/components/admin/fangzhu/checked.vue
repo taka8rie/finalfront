@@ -3,13 +3,12 @@
     <el-row style="margin: 18px 0px 0px 18px ">
     </el-row>
     <el-card style="margin: 18px 2%;width: 95%">
-      <admin-edit-form @onSubmit="loadHouses()" ref="edit"></admin-edit-form>
+      <my-checked @onSubmit="loadHouses()" ref="edit"></my-checked>
       <el-table
-        :data="allhouses.slice((currentPage-1)*pageSize,currentPage*pageSize)"
+        :data="myuncheck.slice((currentPage-1)*pageSize,currentPage*pageSize)"
         stripe
         style="width: 100%"
         :max-height="tableHeight"
-
       >
         <el-table-column
 
@@ -69,19 +68,15 @@
             </el-button>
           </template>
 
-
         </el-table-column>
       </el-table>
-      <!--      <div style="margin: 20px 0 20px 0;float: left">-->
-      <!--        <el-button>取消选择</el-button>-->
-      <!--        <el-button>批量删除</el-button>-->
-      <!--      </div>-->
+
 
       <el-pagination
         @current-change="handleCurrentChange"
         :current-page="currentPage"
         :page-size="pageSize"
-        :total=allhouses.length>
+        :total=myuncheck.length>
       </el-pagination>
 
     </el-card>
@@ -89,24 +84,23 @@
 </template>
 
 <script>
-  // import EditForm from "../../house/EditForm";
-  import adminEditForm from "./adminEditForm";
+  import myChecked from "./myChecked";
     export default {
-        name: "allHouse",
-      components:{adminEditForm},
+        name: "checked",
+      components: { myChecked},
       data() {
-          return{
-            allhouses:[],
-            currentPage:1,
-            pageSize:4,
-            sortType:'houseNumber',
-          }
+        return {
+          myuncheck:[],
+          currentPage:1,
+          pageSize:4,
+          sortType:'houseNumber',
+        }
       },
       created() {
         var _this=this
-        this.$axios.get('/houses').then(resp=>{
+        this.$axios.get('/myUncheck').then(resp=>{
           if (resp && resp.status === 200) {
-            _this.allhouses=resp.data
+            _this.myuncheck=resp.data
           }
         })
       },
@@ -118,11 +112,28 @@
       methods:{
         loadHouses(){
           var _this = this
-          this.$axios.get('/houses').then(resp => {
+          this.$axios.get('/myUncheck').then(resp => {
             if (resp && resp.status === 200) {
-              _this.allhouses = resp.data
+              _this.myuncheck = resp.data
             }
           })
+        },
+        editHouse(item) {
+          this.$refs.edit.dialogFormVisible = true
+          this.$refs.edit.form = {
+            ownerNumber:item.ownerNumber,//新增房屋对应的房主账号
+            houseNumber: item.houseNumber,
+            houseAddr: item.houseAddr,
+            // houseType:'测试的别墅',
+            houseType: item.houseType,
+            houseArea: item.houseArea,
+            houseStatus: item.houseStatus,
+            houseCover: item.houseCover,
+            lastupdateTime: item.lastupdateTime,
+            soldPrice:item.soldPrice,
+            addNote:item.addNote,
+            adminCheck:item.adminCheck,//是否对房屋进行审查
+          }
         },
         deleteHouse(id) {
           console.log("myHouse的deleteHouse函数，选中的houseNumber是: "+id)
@@ -145,27 +156,11 @@
             })
           })
         },
-        editHouse(item) {
-          this.$refs.edit.dialogFormVisible = true
-          this.$refs.edit.form = {
-            ownerNumber:item.ownerNumber,//新增房屋对应的房主账号
-            houseNumber: item.houseNumber,
-            houseAddr: item.houseAddr,
-            // houseType:'测试的别墅',
-            houseType: item.houseType,
-            houseArea: item.houseArea,
-            houseStatus: item.houseStatus,
-            houseCover: item.houseCover,
-            lastupdateTime: item.lastupdateTime,
-            soldPrice:item.soldPrice,
-            addNote:item.addNote,
-            adminCheck:item.adminCheck,//是否对房屋进行审查
-          }
-        },
         handleCurrentChange: function (currentPage) {
           this.currentPage = currentPage
           console.log(this.currentPage)
         },
+
 
       }
     }

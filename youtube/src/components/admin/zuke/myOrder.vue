@@ -5,7 +5,7 @@
     <el-card style="margin: 18px 2%;width: 95%">
 
       <el-table
-        :data="myorders"
+        :data="myorders.slice((currentPage-1)*pageSize,currentPage*pageSize)"
         stripe
         style="width: 100%"
         :max-height="tableHeight">
@@ -63,6 +63,13 @@
 <!--        <el-button>取消选择</el-button>-->
 <!--        <el-button>批量删除</el-button>-->
 <!--      </div>-->
+      <el-pagination
+        @current-change="handleCurrentChange"
+        :current-page="currentPage"
+        :page-size="pageSize"
+        :total=myorders.length>
+      </el-pagination>
+
     </el-card>
   </div>
 </template>
@@ -75,10 +82,10 @@
       components:{ShowForm,vSideMenu},
       data(){
         return {
-          currentPage:1,
-          pageSize:17,
           myorders:[],
-
+          currentPage:1,
+          pageSize:4,
+          sortType:'houseNumber',
         }
       },
         created(){
@@ -95,7 +102,15 @@
         }
       },
       methods:{
-
+        myloadOrder(){
+          // this.$refs.Order.dialogFormVisible=false //不会马上跳出
+          var _this = this
+          this.$axios.get('/allorder').then(resp => {
+            if (resp && resp.status === 200) {
+              _this.myorders = resp.data
+            }
+          })
+        },
         handleCurrentChange: function (currentPage) {
           this.currentPage = currentPage
           console.log(this.currentPage)
@@ -109,7 +124,7 @@
               this.$axios
                 .post('/admindeleteorder', {dealNumber: id}).then(resp => {
                 if (resp && resp.status === 200) {
-                  this.loadHouses()
+                  this.myloadOrder()
                 }
               })
             }

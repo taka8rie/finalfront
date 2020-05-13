@@ -5,7 +5,7 @@
     <el-card style="margin: 18px 2%;width: 95%">
       <my-edit-form @onSubmit="loadHouses()" ref="edit"></my-edit-form>
       <el-table
-        :data="myhouses"
+        :data="myhouses.slice((currentPage-1)*pageSize,currentPage*pageSize)"
         stripe
         style="width: 100%"
         :max-height="tableHeight">
@@ -63,10 +63,14 @@
 
                 </el-table-column>
       </el-table>
-      <!--      <div style="margin: 20px 0 20px 0;float: left">-->
-      <!--        <el-button>取消选择</el-button>-->
-      <!--        <el-button>批量删除</el-button>-->
-      <!--      </div>-->
+
+      <el-pagination
+        @current-change="handleCurrentChange"
+        :current-page="currentPage"
+        :page-size="pageSize"
+        :total=myhouses.length>
+      </el-pagination>
+
     </el-card>
   </div>
 </template>
@@ -79,6 +83,9 @@
       data() {
           return{
             myhouses:[],
+            currentPage:1,
+            pageSize:4,
+            sortType:'houseNumber',
           }
       },
       created() {
@@ -127,7 +134,6 @@
         editHouse(item) {
           this.$refs.edit.dialogFormVisible = true
 
-
           this.$refs.edit.form = {
             ownerNumber:item.ownerNumber,//新增房屋对应的房主账号
             houseNumber: item.houseNumber,
@@ -142,9 +148,14 @@
             lastupdateTime: item.lastupdateTime,
             soldPrice:item.soldPrice,
             addNote:item.addNote,
-            adminCheck:item.adminCheck,//是否对房屋进行审查
+            // adminCheck:item.adminCheck,//是否对房屋进行审查,默认为false 5.12
+            adminCheck:false
           }
-        }
+        },
+        handleCurrentChange: function (currentPage) {
+          this.currentPage = currentPage
+          console.log(this.currentPage)
+        },
       }
     }
 </script>

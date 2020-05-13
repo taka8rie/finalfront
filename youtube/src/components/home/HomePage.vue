@@ -37,7 +37,7 @@
 
 <style scoped>
   .houses-area {
-    width: 990px;
+    width: 900px;
     margin-left: auto;
     margin-right: auto;
   }

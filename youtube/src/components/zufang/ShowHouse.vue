@@ -79,17 +79,17 @@
         return {
           //尝试替换为el-select
           options: [ {
-            value:"1",
+            value:"别墅",
             label:'别墅'
           },
             {
-              value: "2",
+              value: "普通",
               label: '普通'
             }, {
-              value: "3",
+              value: "3DK",
               label: '3DK'
             }, {
-              value: "4",
+              value: "其他",
               label: '其他'
             }],
           value:'',

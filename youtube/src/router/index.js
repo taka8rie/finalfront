@@ -22,6 +22,15 @@ import myYuyue from "../components/admin/zuke/myYuyue";
 import allYuyue from "../components/admin/me/allYuyue";
 import searchUser from "../components/admin/me/searchUser";
 import HomePage from "../components/home/HomePage";
+import ForgetPassword from "../components/ForgetPassword";
+import searchHouse from "../components/admin/me/searchHouse";
+import checked from "../components/admin/fangzhu/checked";
+import findFreezed from "../components/admin/me/findFreezed";
+import say from "../components/communication/say";
+import getMessage from "../components/admin/me/getMessage";
+//测试dataV
+import photo from "../components/admin/dashboard/photo";
+
 Vue.use(Router)
 
 export default new Router({
@@ -34,6 +43,9 @@ export default new Router({
     },{
       path: '/register',
       component:Register
+    },{
+    path:'/forgetPassword',
+      component:ForgetPassword
     },
     {
       path:'/homepage',
@@ -131,10 +143,41 @@ export default new Router({
           path:'/admin/me/searchUser',
           name:'searchUser',
           component:searchUser
+        },
+        {
+          path:'/admin/me/searchHouse',
+          name:'searchHouse',
+          component:searchHouse,
+        },
+        {
+          path:'/admin/fangzhu/checked',
+          name:'checked',
+          component:checked,
+        },
+        {
+          path:'/admin/me/findFreezed',
+          name:'findFreezed',
+          component:findFreezed,
+        },
+        {
+          path:'/admin/me/getMessage',
+          name:'getMessage',
+          component:getMessage,
+        },
+        {
+          path:'/admin/me/photo',
+          name:'photo',
+          component:photo
         }
+
       ]
     },
-
+    //4.28
+    {
+      path:'/say',
+      name:'say',
+      component:say,
+    }
 
   ]
 })

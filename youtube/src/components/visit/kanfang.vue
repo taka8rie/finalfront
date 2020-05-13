@@ -16,15 +16,7 @@
           <el-input v-model="form.ownerNumber" autocomplete="off"></el-input>
         </el-form-item>
 
-        <!--        <el-form-item label="租客编号" :label-width="formLabelWidth" prop="ownerNumber">-->
-        <!--          <el-input v-model="form.ownerNumber" autocomplete="off"></el-input>-->
-        <!--        </el-form-item>-->
-
-<!--        <el-form-item label="管理员编号" :label-width="formLabelWidth" prop="staffNumber">-->
-<!--          <el-input v-model="form.staffNumber" autocomplete="off"></el-input>-->
-<!--        </el-form-item>-->
-
-        <div class="block">
+        <div class="block" style="margin-left: 33px">
           <span class="demonstration">预定看房时间</span>
           <el-date-picker
             v-model="form.seeTime"
@@ -32,7 +24,7 @@
             placeholder="选择日期">
           </el-date-picker>
         </div>
-
+      </el-form>
 
         <!--        <el-form-item label="下单处理时间" :label-width="formLabelWidth" prop="handleTime">-->
         <!--          <el-input v-model="form.handleTime" autocomplete="off"></el-input>-->
@@ -42,10 +34,10 @@
 <!--          <el-input type="textarea" v-model="form.claim" autocomplete="off"></el-input>-->
 <!--        </el-form-item>-->
 
-      </el-form>
+
       <div slot="footer" class="dialog-footer">
 
-        <el-button @click="dialogFormVisible = false">取 消</el-button>
+        <el-button @click="cancelKanfang">取 消</el-button>
         <el-button type="primary" @click="onAdd">确定</el-button>
       </div>
     </el-dialog>
@@ -94,11 +86,16 @@
               //将数据传递给父组件里边的onAdd,父组件使用@onAdd来接受
               this.$toastMessage("添加成功", 3000)
               this.$emit('onAdd')
+              this.$router.push('/index')
             }else{
               this.$message("你已经添加过该预约订单了！"),
                 this.$router.push({path: '/index'})
             }
           })
+        },
+        cancelKanfang() {
+          this.dialogFormVisible=false
+          this.$router.push({path:'/index'})
         }
       }
     }

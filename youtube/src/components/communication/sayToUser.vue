@@ -11,12 +11,11 @@
 
     <el-input
       type="textarea"
-      autosize
       placeholder="请输入内容"
       v-model="form.textarea">
     </el-input>
 
-    <el-button type="danger" @click="sendMessages">发送信息</el-button>
+    <el-button type="danger" @click="sendMessages" >发送信息</el-button>
 
   </el-form>
 </template>

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <i class="el-icon-circle-plus-outline"  @click="dialogFormVisible = true"></i>
+<!--    <i class="el-icon-circle-plus-outline"  @click="dialogFormVisible = true"></i>-->
     <el-dialog
       title="订单详情"
       :visible.sync="dialogFormVisible"
@@ -69,7 +69,8 @@
       </el-form>
       <div slot="footer" class="dialog-footer">
 
-        <el-button @click="dialogFormVisible = false">取 消</el-button>
+<!--        <el-button @click="dialogFormVisible = false " >取 消</el-button>-->
+        <el-button type="warning" @click="cancelOrder">取消</el-button>
         <el-button type="primary" @click="onAdd">确定</el-button>
       </div>
     </el-dialog>
@@ -149,7 +150,12 @@
                 this.$router.push({path: '/index'})
             }
           })
+        },
+        cancelOrder() {
+          this.dialogFormVisible=false
+          this.$router.push({path:'/index'})
         }
+
       }
     }
 </script>

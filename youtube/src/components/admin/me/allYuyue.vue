@@ -5,7 +5,7 @@
     <el-card style="margin: 18px 2%;width: 95%">
       <admin-kanfang @onSubmit="loadYuyue()" ref="edit"></admin-kanfang>
       <el-table
-        :data="allyuyue"
+        :data="allyuyue.slice((currentPage-1)*pageSize,currentPage*pageSize)"
         stripe
         style="width: 100%"
         :max-height="tableHeight">
@@ -60,10 +60,12 @@
 
         </el-table-column>
       </el-table>
-      <!--      <div style="margin: 20px 0 20px 0;float: left">-->
-      <!--        <el-button>取消选择</el-button>-->
-      <!--        <el-button>批量删除</el-button>-->
-      <!--      </div>-->
+      <el-pagination
+        @current-change="handleCurrentChange"
+        :current-page="currentPage"
+        :page-size="pageSize"
+        :total=allyuyue.length>
+      </el-pagination>
     </el-card>
   </div>
 </template>
@@ -76,6 +78,9 @@
       data() {
         return{
           allyuyue:[],
+          currentPage:1,
+          pageSize:4,
+          sortType:'showNumber',
         }
       },
       created() {
@@ -110,6 +115,7 @@
               this.$axios
                 .post('/deleteyuyue', {showNumber: id}).then(resp => {
                 if (resp && resp.status === 200) {
+                  console.log("woshinidie")
                   this.loadYuyue()
                 }
               })
@@ -128,7 +134,11 @@
             showNumber:item.showNumber,
             houseNumber:item.houseNumber
           }
-        }
+        },
+        handleCurrentChange: function (currentPage) {
+          this.currentPage = currentPage
+          console.log(this.currentPage)
+        },
       }
 
     }

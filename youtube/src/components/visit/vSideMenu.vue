@@ -1,7 +1,9 @@
 <template>
+
   <el-select
     class="side"
     v-model="value" placeholder="请选择感兴趣的类型"
+    size="small"
     @change="typeSelect">
     <el-option
       v-for="item in options"
@@ -10,6 +12,7 @@
       :value="item.value">
     </el-option>
   </el-select>
+
 </template>
 
 <script>
@@ -56,10 +59,10 @@
 
 <style scoped>
 .side{
-  position: fixed;
+  position:absolute ;
   margin-left: 50%;
   left: -450px;
-  top: 130px;
+  top: 0px;
   width: 200px;
 }
 </style>

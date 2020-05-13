@@ -5,7 +5,7 @@
     <el-card style="margin: 18px 2%;width: 95%">
       <admin-kanfang @onSubmit="loadYuyue()" ref="edit"></admin-kanfang>
       <el-table
-        :data="myyuyue"
+        :data="myyuyue.slice((currentPage-1)*pageSize,currentPage*pageSize)"
         stripe
         style="width: 100%"
         :max-height="tableHeight">
@@ -64,6 +64,13 @@
       <!--        <el-button>取消选择</el-button>-->
       <!--        <el-button>批量删除</el-button>-->
       <!--      </div>-->
+      <el-pagination
+        @current-change="handleCurrentChange"
+        :current-page="currentPage"
+        :page-size="pageSize"
+        :total=myyuyue.length>
+      </el-pagination>
+
     </el-card>
   </div>
 </template>
@@ -76,6 +83,9 @@
       data() {
         return{
           myyuyue:[],
+          currentPage:1,
+          pageSize:4,
+          sortType:'dealNumber',
         }
       },
       created() {
@@ -128,7 +138,11 @@
             showNumber:item.showNumber,
             houseNumber:item.houseNumber
           }
-        }
+        },
+        handleCurrentChange: function (currentPage) {
+          this.currentPage = currentPage
+          console.log(this.currentPage)
+        },
 
       }
     }

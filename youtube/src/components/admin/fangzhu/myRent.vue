@@ -5,7 +5,7 @@
     <el-card style="margin: 18px 2%;width: 95%">
 
       <el-table
-        :data="myrents"
+        :data="myrents.slice((currentPage-1)*pageSize,currentPage*pageSize)"
         stripe
         style="width: 100%"
         :max-height="tableHeight">
@@ -68,6 +68,13 @@
       <!--        <el-button>取消选择</el-button>-->
       <!--        <el-button>批量删除</el-button>-->
       <!--      </div>-->
+      <el-pagination
+        @current-change="handleCurrentChange"
+        :current-page="currentPage"
+        :page-size="pageSize"
+        :total=myrents.length>
+      </el-pagination>
+
     </el-card>
   </div>
 </template>
@@ -77,7 +84,10 @@
         name: "myRent",
       data() {
           return{
-            myrents:[]
+            myrents:[],
+            currentPage:1,
+            pageSize:4,
+            sortType:'houseNumber',
           }
       },
       computed: {
@@ -92,6 +102,12 @@
             _this.myrents = resp.data
           }
         })
+      },
+      methods:{
+        handleCurrentChange: function (currentPage) {
+          this.currentPage = currentPage
+          console.log(this.currentPage)
+        },
       }
     }
 </script>

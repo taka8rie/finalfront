@@ -12,9 +12,9 @@
     </el-menu-item>
     <i class="el-icon-switch-button" v-on:click="logout" style="float:right;font-size: 40px;color: #222;padding: 10px"></i>
 
-    <a href="#nowhere" style="color: #222;float: right;padding: 20px;">更多功能</a>
+    <a href="#nowhere" style="color: #222;float: right;padding: 20px;"></a>
     <i class="el-icon-menu" style="float:right;font-size: 45px;color: #222;padding-top: 8px"></i>
-    <span style="position: absolute;padding-top: 20px;right: 43%;font-size: 20px;font-weight: bold">这里是房屋系统的主界面</span>
+    <span style="position: absolute;padding-top: 20px;right: 43%;font-size: 20px;font-weight: bold">前台</span>
   </el-menu>
 </template>
 

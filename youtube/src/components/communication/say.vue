@@ -1,7 +1,8 @@
 <template>
+  <el-card style="width: 50%;margin-left: 450px;margin-top: 150px">
   <el-form :model="form" label-width="80px">
 
-    <el-card style="height: 300px;width: 1150px;overflow: scroll;">
+    <el-card style="height: 300px;width: 800px;overflow: scroll;">
       <div style="float: left; ">
         <div v-for="item in message_array" :key="item"  style="margin: 10px">
           {{item}}
@@ -20,6 +21,7 @@
     <el-button type="danger" @click="sendMessages">发送信息</el-button>
 
   </el-form>
+  </el-card>
 </template>
 
 <script>
@@ -46,7 +48,7 @@
         this.$goEasy.subscribe({
           channel: "toUser",//替换为您自己的channel
           onMessage: function (message1) {
-            vm.message_array.push("对方:"+message1.content);
+            vm.message_array.push("对方: "+message1.content);
           }
         })
 

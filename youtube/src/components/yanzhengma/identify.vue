@@ -14,7 +14,7 @@
         },
         fontSizeMin: {
           type: Number,
-          default: 16
+          default: 30
         },
         fontSizeMax: {
           type: Number,
@@ -84,8 +84,8 @@
           for (let i = 0; i < this.identifyCode.length; i++) {
             this.drawText(ctx, this.identifyCode[i], i)
           }
-          this.drawLine(ctx)
-          this.drawDot(ctx)
+          // this.drawLine(ctx)
+          // this.drawDot(ctx)
         },
         drawText (ctx, txt, i) {
           ctx.fillStyle = this.randomColor(this.colorMin, this.colorMax)

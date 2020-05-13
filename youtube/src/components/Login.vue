@@ -106,7 +106,7 @@
               this.$message("你的账户已被冻结,请联系管理员申请解冻")
             }
             else {
-              this.$message("表格信息错误")
+              this.$message("表格信息错误,请确认用户密码和验证码是否正确！")
             }
           })
           .catch(failResponse => {
@@ -140,6 +140,16 @@
 </script>
 
 <style>
+  #poster {
+    background: url("../assets/江南.jpg") no-repeat center;
+    height: 100%;
+    width: 100%;
+    background-size: cover;
+    position: fixed;
+  }
+  body{
+    margin: 0px;
+  }
   .login-container {
     border-radius: 15px;
     background-clip: padding-box;

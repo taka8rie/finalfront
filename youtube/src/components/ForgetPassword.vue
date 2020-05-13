@@ -1,5 +1,7 @@
 <template>
-  <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+  <body id="poster">
+  <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px" class="login-container">
+    <h3 class="login_title">修改密码</h3>
     <el-form-item label="账号" prop="account">
       <el-input v-model.number="ruleForm.account"></el-input>
     </el-form-item>
@@ -17,6 +19,7 @@
       <el-button @click="resetForm('ruleForm')">重置</el-button>
     </el-form-item>
   </el-form>
+  </body>
 </template>
 
 <script>
@@ -88,12 +91,39 @@
               this.$alert('修改成功','提示',{confirmButtonText: '确定'})
               this.$router.replace({path: '/login'})
             }
+            else{
+              this.$alert(successResponse.data.message,'提示',{
+                confirmButtonText: '确定'
+              }).catch();
+            }
           }).catch(failResponse=>{})
+        },
+        resetForm(ruleForm) {
+          this.$refs[ruleForm].resetFields();
         }
       }
     }
 </script>
 
 <style scoped>
-
+  #poster {
+    background: url("../assets/江南.jpg") no-repeat center;
+    height: 100%;
+    width: 100%;
+    background-size: cover;
+    position: fixed;
+  }
+  body{
+    margin: 0px;
+  }
+  .login-container {
+    border-radius: 15px;
+    background-clip: padding-box;
+    margin: 90px auto;
+    width: 350px;
+    padding: 35px 35px 15px 35px;
+    background: #fff;
+    border: 1px solid #eaeaea;
+    box-shadow: 0 0 25px #cac6c6;
+  }
 </style>

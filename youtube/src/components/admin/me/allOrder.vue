@@ -5,7 +5,7 @@
     <el-card style="margin: 18px 2%;width: 95%">
       <Deals @onSubmit="loadOrder()" ref="edit"></Deals>
       <el-table
-        :data="allorder"
+        :data="allorder.slice((currentPage-1)*pageSize,currentPage*pageSize)"
         stripe
         style="width: 100%"
         :max-height="tableHeight">
@@ -78,6 +78,12 @@
       <!--        <el-button>取消选择</el-button>-->
       <!--        <el-button>批量删除</el-button>-->
       <!--      </div>-->
+      <el-pagination
+        @current-change="handleCurrentChange"
+        :current-page="currentPage"
+        :page-size="pageSize"
+        :total=allorder.length>
+      </el-pagination>
     </el-card>
   </div>
 </template>
@@ -90,6 +96,9 @@ import Deals from "../../visit/Deals";
       data() {
           return{
             allorder:[],
+            currentPage:1,
+            pageSize:4,
+            sortType:'dealNumber',
           }
       },
       created(){
@@ -107,16 +116,17 @@ import Deals from "../../visit/Deals";
       },
       methods:{
         loadOrder(){
-          this.$refs.Order.dialogFormVisible=false //不会马上跳出
+          // this.$refs.Order.dialogFormVisible=false //不会马上跳出
           var _this = this
           this.$axios.get('/allorder').then(resp => {
             if (resp && resp.status === 200) {
-              _this.myhouses = resp.data
+              _this.allorder = resp.data
             }
           })
         },
         deleteOrder(id) {
           // console.log("myHouse的deleteOrder函数，选中的houseNumber是: "+id)
+          let vm=this
           this.$confirm('此操作将永久删除该订单, 是否继续?', '提示', {
             confirmButtonText: '确定',
             cancelButtonText: '取消',
@@ -125,7 +135,7 @@ import Deals from "../../visit/Deals";
               this.$axios
                 .post('/admindeleteorder', {dealNumber: id}).then(resp => {
                 if (resp && resp.status === 200) {
-                  this.loadHouses()
+                  vm.loadOrder()
                 }
               })
             }
@@ -148,7 +158,11 @@ import Deals from "../../visit/Deals";
             price: item.price,
             staffNumber: item.staffNumber,
           }
-        }
+        },
+        handleCurrentChange: function (currentPage) {
+          this.currentPage = currentPage
+          console.log(this.currentPage)
+        },
       }
 
     }

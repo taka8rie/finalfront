@@ -16,8 +16,6 @@ import VeLine from 'v-charts/lib/ring.common'
 Vue.component(VeLine.name, VeLine)
 
 
-
-
 //即时通信调用goEasy 4.27
 Vue.prototype.$goEasy=new GoEasy({
   host:'hangzhou.goeasy.io',

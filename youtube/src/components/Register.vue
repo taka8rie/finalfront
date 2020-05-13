@@ -1,5 +1,7 @@
 <template>
-  <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+  <body id="poster">
+  <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="70px" class="login-container">
+    <h3 class="login_title">系统注册</h3>
   <el-form-item label="账号" prop="account">
     <el-input v-model.number="ruleForm.account"></el-input>
   </el-form-item>
@@ -15,14 +17,14 @@
 
   <el-radio v-model="radio" :label="3">房主</el-radio>
   <el-radio v-model="radio" :label="2">租客</el-radio>
-    <el-radio v-model="radio" :label="1" disabled>管理员</el-radio>
+<!--    <el-radio v-model="radio" :label="1" disabled>管理员</el-radio>-->
 
-  <el-form-item>
-    <el-button type="primary" @click="submitForm('ruleForm')">提交</el-button>
+  <el-form-item >
+    <el-button type="primary" @click="submitForm('ruleForm')"  >提交</el-button>
     <el-button @click="resetForm('ruleForm')">重置</el-button>
   </el-form-item>
 </el-form>
-
+  </body>
 </template>
 
 <script>
@@ -136,5 +138,29 @@
 </script>
 
 <style scoped>
-
+  #poster {
+    background: url("../assets/江南.jpg") no-repeat center;
+    height: 100%;
+    width: 100%;
+    background-size: cover;
+    position: fixed;
+  }
+  body{
+    margin: 0px;
+  }
+  .login-container {
+    border-radius: 15px;
+    background-clip: padding-box;
+    margin: 90px auto;
+    width: 350px;
+    padding: 35px 35px 15px 35px;
+    background: #fff;
+    border: 1px solid #eaeaea;
+    box-shadow: 0 0 25px #cac6c6;
+  }
+  .login_title {
+    margin: 0px auto 40px auto;
+    text-align: center;
+    color: #505458;
+  }
 </style>

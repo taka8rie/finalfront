@@ -1,6 +1,6 @@
 <template>
   <div>
-<!--    <i class="el-icon-circle-plus-outline"  @click="dialogFormVisible = true"></i>-->
+    <!--    <i class="el-icon-circle-plus-outline"  @click="dialogFormVisible = true"></i>-->
     <el-dialog
       title="添加/修改房屋"
       :visible.sync="dialogFormVisible"
@@ -57,9 +57,9 @@
           <el-input type="hidden" v-model="form.houseNumber" autocomplete="off"></el-input>
         </el-form-item>
 
-        <el-form-item label="是否审核">
-          <el-switch v-model="form.adminCheck" :active-value="1" :inactive-value="0"></el-switch>
-        </el-form-item>
+<!--        <el-form-item label="是否审核">-->
+<!--          <el-switch v-model="form.adminCheck" :active-value="1" :inactive-value="0"></el-switch>-->
+<!--        </el-form-item>-->
 
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -73,7 +73,7 @@
 <script>
   import ImgUpload from "../../house/ImgUpload";
     export default {
-        name: "adminEditForm",
+        name: "myChecked",
       components:{ImgUpload},
       data () {
         return {

@@ -1,7 +1,7 @@
 <template>
-
+  <div>
     <ve-ring :data="chartData" ></ve-ring>
-    <ve-ring :data="userData"></ve-ring>
+    </div>
 </template>
 
 <script>
@@ -20,17 +20,24 @@
           }
         }
       },
-      created(){
-        var _this = this
-        this.$axios.get('/statistics').then(resp => {
-          if (resp && resp.status === 200) {
-            let data = resp.data;
-            console.log(data)
-            // _this.chartData.rows= resp.data
-            _this.chartData.rows=data
-          }
-        })
-      }
+      mounted() {
+        this.loadhousechart()
+        this.loaduserchart()
+      },
+      methods:
+        {
+          loadhousechart() {
+            var _this = this
+            this.$axios.get('/statistics').then(resp => {
+              if (resp && resp.status === 200) {
+                let data = resp.data;
+                console.log(data)
+                // _this.chartData.rows= resp.data
+                _this.chartData.rows = data
+              }
+            })
+          },
+        }
     }
 </script>
 

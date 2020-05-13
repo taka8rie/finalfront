@@ -157,6 +157,7 @@
             soldPrice:item.soldPrice,
             addNote:item.addNote,
             ownerNumber:item.ownerNumber,
+            tenentClaim:item.tenentClaim,
           };
         },
       }
