@@ -10,11 +10,12 @@ import visitHouse from "./components/visit/visitHouse";
 import identify from "./components/yanzhengma/identify";
 import GoEasy from 'goeasy'
 import store from './store'
+import VCharts from 'v-charts'
 import {Message} from "element-ui";
 //环状图 4.30
 import VeLine from 'v-charts/lib/ring.common'
 Vue.component(VeLine.name, VeLine)
-
+Vue.use(VCharts)
 
 //即时通信调用goEasy 4.27
 Vue.prototype.$goEasy=new GoEasy({
