@@ -5,8 +5,8 @@
     <el-form-item label="账号" prop="account">
       <el-input v-model.number="ruleForm.account"></el-input>
     </el-form-item>
-    <el-form-item label="手机号码" prop="tel">
-      <el-input type="text" v-model="ruleForm.tel" autocomplete="off"></el-input>
+    <el-form-item label="口令" prop="forgetToken">
+      <el-input type="text" v-model="ruleForm.forgetToken" autocomplete="off"></el-input>
     </el-form-item>
     <el-form-item label="新密码" prop="pass">
       <el-input type="password" v-model="ruleForm.pass" autocomplete="off"></el-input>
@@ -50,9 +50,9 @@
             callback();
           }
         };
-        var validateTel=(rule,value,callback)=>{
+        var validateToken=(rule,value,callback)=>{
           if (value === '') {
-            callback(new Error('请输入电话,用于忘记密码后修改密码'));
+            callback(new Error('请输入口令,用于忘记密码后修改密码'));
           }
         }
 
@@ -61,7 +61,8 @@
             pass: '',
             checkPass: '',
             // account: '',//由age已经修改为account
-            tel:''
+            // tel:'',
+            forgetToken:''
           },
           // radio:'1',
           rules: {
@@ -74,8 +75,8 @@
             account: [
               { validator: checkAccount, trigger: 'blur' }
             ],
-            tel:[{
-              validator:validateTel,trigger:'blur'
+            forgetToken:[{
+              validator:validateToken,trigger:'blur'
             }]
           },
         };
@@ -85,7 +86,7 @@
           this.$axios.post('/forgetpassword',{
             username:this.ruleForm.account,
             password:this.ruleForm.pass,
-            tel:this.ruleForm.tel,
+            forgetToken:this.ruleForm.forgetToken,
           }) .then(successResponse => {
             if (successResponse.data.code === 200) {
               this.$alert('修改成功','提示',{confirmButtonText: '确定'})

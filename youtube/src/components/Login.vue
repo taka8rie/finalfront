@@ -96,10 +96,6 @@
           .then(successResponse => {
             if (successResponse.data.code === 200&&this.identifyCode===this.loginForm.yanzhengma) {
               this.$router.replace({path: '/index'})
-              //获取session
-              // sessionStorage.setItem('name',JSON.stringify(successResponse.data.username));
-              // let myName=JSON.parse(sessionStorage.getItem("name"));
-              // console.log("session is : "+myName)
             }else if(successResponse.data.code===777){
             //这里需要填充
             //   this.$toastMessage({message:'你的账户已被冻结',time:3000})

@@ -14,6 +14,9 @@
   <el-form-item label="手机号码" prop="tel">
     <el-input type="text" v-model="ruleForm.tel" autocomplete="off"></el-input>
   </el-form-item>
+    <el-form-item label="口令" prop="forgetToken">
+      <el-input type="text" v-model="ruleForm.forgetToken" autocomplete="off"></el-input>
+    </el-form-item>
 
   <el-radio v-model="radio" :label="3">房主</el-radio>
   <el-radio v-model="radio" :label="2">租客</el-radio>
@@ -62,16 +65,24 @@
         // };
         var validateTel=(rule,value,callback)=>{
           if (value === '') {
-            callback(new Error('请输入电话,用于忘记密码后修改密码'));
+            callback(new Error('请输入电话,方便管理员联系你'));
           }
         }
+
+        var validateToken=(rule,value,callback)=>{
+          if (value === '') {
+            callback(new Error('请输入口令,用于忘记密码后修改密码'));
+          }
+        }
+
 
         return {
           ruleForm: {
             pass: '',
             checkPass: '',
             account: '',//由age已经修改为account
-            tel:''
+            tel:'',
+            forgetToken:''
           },
           radio:'',//此处radio的值默认为空 4.20
           rules: {
@@ -84,9 +95,9 @@
             account: [
               { validator: checkAccount, trigger: 'blur' }
             ],
-            // radio:[{
-            //   validator:validateRadio,trigger:'blur'
-            // }],
+            forgetToken:[{
+              validator:validateToken,trigger:'blur'
+            }],
             tel:[{
               validator:validateTel,trigger:'blur'
             }]
@@ -103,7 +114,8 @@
             username:this.ruleForm.account,
             password:this.ruleForm.pass,
             tel:this.ruleForm.tel,
-            accountType: this.radio.valueOf()//获取radio的值
+            accountType: this.radio.valueOf(),//获取radio的值
+            forgetToken:this.ruleForm.forgetToken,//修改密码的口令
           }) .then(successResponse => {
             if (successResponse.data.code === 200&&this.radio.valueOf()!=0) {
               this.$alert('注册成功','提示',{confirmButtonText: '确定'})
