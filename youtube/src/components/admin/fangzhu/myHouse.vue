@@ -149,7 +149,9 @@
             soldPrice:item.soldPrice,
             addNote:item.addNote,
             // adminCheck:item.adminCheck,//是否对房屋进行审查,默认为false 5.12
-            adminCheck:false
+            adminCheck:false,
+             housePicture:item.housePicture
+
           }
         },
         handleCurrentChange: function (currentPage) {

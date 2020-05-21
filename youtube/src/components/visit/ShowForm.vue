@@ -60,6 +60,13 @@
           <el-input :disabled="true" type="hidden" v-model="form.ownerNumber" autocomplete="off"></el-input>
 <!--          <span>{{form.ownerNumber}}</span>-->
         </el-form-item>
+
+        <el-image
+          style="width: 100px; height: 100px"
+          :src="url"
+          :preview-src-list="srcList">
+        </el-image>
+
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="success" @click="yuyue">预约看房</el-button>
@@ -87,9 +94,13 @@
             soldPrice:'',
             addNote:'',
             ownerNumber:'',//注释掉ownerNumber
-            tenentClaim:'',//!!无法显示出房屋数据库里边的评价！
-          },
-          formLabelWidth: '90px'
+            tenentClaim:'',//
+            housePicture:''
+             },
+          formLabelWidth: '90px',
+          url: '',
+          srcList:[]
+
         }
       },
       methods: {
@@ -106,6 +117,7 @@
             ownerNumber:'',//注释掉ownerNumber
             houseType: '',
             tenentClaim:'',
+
           }
         },
         gotolink () {

@@ -132,6 +132,7 @@
             soldPrice:item.soldPrice,
             addNote:item.addNote,
             adminCheck:item.adminCheck,//是否对房屋进行审查
+            housePicture:item.housePicture
           }
           this.loadHouses();//4.24 尝试修改后自动刷新表格信息
         },

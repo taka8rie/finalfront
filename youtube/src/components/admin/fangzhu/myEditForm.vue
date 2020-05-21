@@ -47,7 +47,14 @@
         <el-form-item label="房屋图片" :label-width="formLabelWidth" prop="houseCover">
           <el-input v-model="form.houseCover" autocomplete="off" placeholder="图片 URL"></el-input>
           <img-upload @onUpload="uploadImg" ref="imgUpload"></img-upload>
+
         </el-form-item>
+
+        <el-form-item label="房屋内部图片" :label-width="formLabelWidth" prop="housePicture">
+          <el-input v-model="form.housePicture" autocomplete="off" placeholder="内部图片 URL"></el-input>
+          <picture-upload @onUpload="uploadPicture" ref="pictureUpload"></picture-upload>
+        </el-form-item>
+
         <el-form-item label="房主要求" :label-width="formLabelWidth" prop="addNote">
           <el-input type="textarea" v-model="form.addNote" autocomplete="off"></el-input>
         </el-form-item>
@@ -71,6 +78,7 @@
         <!--          <el-switch v-model="form.adminCheck" :active-value="1" :inactive-value="0" disabled></el-switch>-->
         <!--        </el-form-item>-->
 
+
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">取 消</el-button>
@@ -82,9 +90,10 @@
 
 <script>
   import ImgUpload from "../../house/ImgUpload";
+  import PictureUpload from "../../house/PictureUpload";
   export default {
     name: "myEditForm",
-    components:{ImgUpload},
+    components:{PictureUpload, ImgUpload},
     data () {
       return {
         //尝试替换为el-select
@@ -128,6 +137,7 @@
           soldPrice:'',
           addNote:'',
           adminCheck:0,//房屋默认未审核
+          housePicture:'' //5.18
         },
         formLabelWidth: '90px',
 
@@ -163,6 +173,7 @@
           soldPrice:'',
           addNote:'',
           adminCheck:0,//修改了这里！ 4.17
+          housePicture:''
         }
       },
       onSubmit () {
@@ -181,7 +192,8 @@
                 soldPrice:this.form.soldPrice,
                 addNote:this.form.addNote,
                 // adminCheck:this.form.adminCheck,//是否对房屋进行审查
-                adminCheck:this.form.adminCheck
+                adminCheck:this.form.adminCheck,
+                housePicture:this.form.housePicture
               }).then(resp => {
               if (resp && resp.status === 200) {
                 this.dialogFormVisible = false
@@ -198,6 +210,11 @@
         this.form.houseCover=this.$refs.imgUpload.url
         console.log(this.$refs.imgUpload.url);
         console.log(this.form.houseCover);
+      },
+      uploadPicture() {
+        console.log("水怪")
+        this.form.housePicture=this.$refs.pictureUpload.url
+        console.log(this.form.housePicture)
       }
     }
   }
