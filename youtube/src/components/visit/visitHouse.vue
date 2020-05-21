@@ -158,7 +158,12 @@
             addNote:item.addNote,
             ownerNumber:item.ownerNumber,
             tenentClaim:item.tenentClaim,
+            housePicture:item.housePicture
           };
+          this.$refs.edit.url=item.houseCover;
+
+          this.$refs.edit.srcList=[item.houseCover,item.housePicture]
+          console.log("点击该房屋得到的url "+item.houseCover)
         },
       }
     }
